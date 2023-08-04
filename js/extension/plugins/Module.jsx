@@ -1,50 +1,61 @@
+import React from "react";
 import {connect} from "react-redux";
 import { name } from '../../../config';
-
+import { toggleControl } from "@mapstore/actions/controls";
 import {createPlugin} from "@mapstore/utils/PluginsUtils";
-import ExtensionComponent from "../components/Component";
-import Rx from "rxjs";
+import MainPanel from "../components/MainPanel/MainPanel";
+import { CONTROL_NAME } from "../constants";
 
-import { changeZoomLevel } from "@mapstore/actions/map";
 import '../assets/style.css';
 
-export default createPlugin(name, {
-    component: connect(state => ({
-        value: state.sampleExtension && state.sampleExtension.value
-    }), {
-        onIncrease: () => {
-            return {
-                type: 'INCREASE_COUNTER'
-            };
-        }, changeZoomLevel
-    })(ExtensionComponent),
-    reducers: {
-        sampleExtension: (state = { value: 1 }, action) => {
-            if (action.type === 'INCREASE_COUNTER') {
-                return { value: state.value + 1 };
-            }
-            return state;
+import { getAuthLevel, isActive } from "../stateManagement/selector/selector";
+import reducers from "../stateManagement/reducers/reducers";
+import { setup, close } from "../stateManagement/actions/actions";
+import * as actions from "../stateManagement/actions/actions";
+import * as epics from "../stateManagement/epics/epicsDistributor";
+import init from "./init";
+import { Glyphicon } from "react-bootstrap";
+
+const compose = (...functions) => {
+    return (args) => functions.reduceRight((arg, fn) => fn(arg), args);
+};
+
+const component = compose(
+    connect(
+        // selectors - mapStateToProps
+        (state) => ({
+            // selectors
+            active: isActive(state),
+            authorized: getAuthLevel(state),
+        }),
+        {
+            // actions - mapDispatchToProps
+            onClose: close
         }
-    },
-    epics: {
-        logCounterValue: (action$, store) => action$.ofType('INCREASE_COUNTER').switchMap(() => {
-            /* eslint-disable */
-            console.log('CURRENT VALUE: ' + store.getState().sampleExtension.value);
-            /* eslint-enable */
-            return Rx.Observable.empty();
-        })
-    },
+    ),
+    compose(
+        // on setup / close
+        connect(() => ({}), {
+            setup,
+            close,
+        }),
+        init()
+    )
+)(MainPanel);
+
+
+
+export default createPlugin(name, {
+    component: component,
+    reducers: { docsManager: reducers },
+    epics: {...epics},
     containers: {
-        Toolbar: {
-            name: "sampleExtension",
+        SidebarMenu: {
+            name: "docsManager",
             position: 10,
-            text: "INC",
+            icon: <Glyphicon glyph="list"/>,
             doNotHide: true,
-            action: () => {
-                return {
-                    type: 'INCREASE_COUNTER'
-                };
-            },
+            action: toggleControl.bind(null, CONTROL_NAME, null),
             priority: 1
         }
     }
