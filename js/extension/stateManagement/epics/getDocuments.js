@@ -9,19 +9,20 @@ import { wrapStartStop } from "@mapstore/observables/epics";
 
 import { getDocuments } from "@js/extension/requests/documentsApi";
 
-export function getDocumentsByPlugin(action$, store) {
+export function getDocumentsById(action$, store) {
     return action$
         .ofType(GET_DOCUMENTS)
         .filter(() => isActive(store.getState()))
         .switchMap((action) => {
+            const apiUrl = getPluginCfg(store.getState()).api;
+            const idPlugin = getPluginCfg(store.getState()).id;
             let observable$ = Rx.Observable.empty();
-            console.log(action);
-            if (!action.api || !action.id) {
-                return Rx.Observable.empty();
+            if (!apiUrl || !idPlugin) {
+                return observable$;
             }
-            if (action.api) {
+            if (apiUrl) {
                 observable$ = Rx.Observable.defer(() =>
-                    getDocuments(action.api, action.id)
+                    getDocuments(apiUrl, idPlugin, action?.params)
                 )
                     .catch((e) => {
                         console.log("Error - Get list of documents");

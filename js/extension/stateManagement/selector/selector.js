@@ -20,6 +20,9 @@ export const getPluginCfg = (state) => state?.docsManager?.pluginCfg;
 export const getDocuments = (state) => state?.docsManager?.documents;
 
 export const getApi = (state) => state?.docsManager?.api;
+export const getId = (state) => state?.docsManager?.id;
+export const getUploadVisibility = (state) =>
+    state?.docsManager.uploadVisibility;
 
 // to emulate authentication use test_env and sec-roles header as : "ROLE_MAPSTORE_ADMIN;ROLE_EL_APPLIS_CAD_CNIL1" (; separator)
 export const getAuthLevel = (state) => {
