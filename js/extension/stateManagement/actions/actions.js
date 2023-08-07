@@ -13,7 +13,12 @@ export const RESET_DOCSMANAGER_STATE = "RESET_DOCSMANAGER_STATE";
 export const SHOW_DOCUMENT = "SHOW_DOCUMENT";
 export const SET_DOCUMENTS = "SET_DOCUMENTS";
 export const DOCS_LOADING = "DOCS_LOADING";
+export const SET_UPLOAD_VISIBILITY = "SET_UPLOAD_VISIBILITY";
 
+export const setUploadVisibility = (visible) => ({
+    type: SET_UPLOAD_VISIBILITY,
+    visible,
+});
 export const docsLoading = (value, name, mode) => ({
     type: DOCS_LOADING,
     value,
@@ -101,9 +106,10 @@ export const showDocument = (id) => ({
  * @param {string} id
  * @returns {{id:string}}
  */
-export const getDocument = (id) => ({
+export const getDocument = (id, params = {}) => ({
     type: GET_DOCUMENT,
     id,
+    params,
 });
 
 /**
@@ -111,10 +117,9 @@ export const getDocument = (id) => ({
  * @param {string} id
  * @returns {{id:string}}
  */
-export const getDocuments = (api, id) => ({
+export const getDocuments = (params = {}) => ({
     type: GET_DOCUMENTS,
-    api,
-    id,
+    params,
 });
 
 /**

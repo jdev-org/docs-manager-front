@@ -1,13 +1,32 @@
 import React from "react";
 
-import { Panel } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { uniqueId } from "lodash";
+import { Glyphicon } from "react-bootstrap";
 
-const MainPanelBody = ({ document, add, deleteDoc, download, show }) => {
+import "./DocumentRow.css";
+
+const DocumentRow = (props) => {
     return (
-        <Panel>
-            <Panel.Body>Basic panel example</Panel.Body>
-        </Panel>
-    )
-}
+        <tr>
+            <td>{props.name}</td>
+            <td>
+                <Button className="docActionBtn" id={uniqueId("doc_show_")} onClick={() => props.download(props.id)}>
+                    <Glyphicon glyph="download-alt" />
+                </Button>
+            </td>
+            <td>
+                <Button className="docActionBtn" id={uniqueId("doc_show_")} onClick={() => props.show(props.id)}>
+                    <Glyphicon glyph="eye-open" />
+                </Button>
+            </td>
+            <td>
+                <Button className="docActionBtn" id={uniqueId("doc_show_")} onClick={() => props.deleteDocument(props.id)}>
+                    <Glyphicon glyph="trash" />
+                </Button>
+            </td>
+        </tr>
+    );
+};
 
-export default MainPanelBody;
+export default DocumentRow;

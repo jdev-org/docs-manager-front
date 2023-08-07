@@ -8,10 +8,9 @@ import { CONTROL_NAME } from "../constants";
 
 import '../assets/style.css';
 
-import { getAuthLevel, isActive } from "../stateManagement/selector/selector";
+import { getAuthLevel, getUploadVisibility, isActive } from "../stateManagement/selector/selector";
 import reducers from "../stateManagement/reducers/reducers";
-import { setup, close } from "../stateManagement/actions/actions";
-import * as actions from "../stateManagement/actions/actions";
+import { setup, close, setUploadVisibility, uploadDocument } from "../stateManagement/actions/actions";
 import * as epics from "../stateManagement/epics/epicsDistributor";
 import init from "./init";
 import { Glyphicon } from "react-bootstrap";
@@ -27,10 +26,13 @@ const component = compose(
             // selectors
             active: isActive(state),
             authorized: getAuthLevel(state),
+            isUpload: getUploadVisibility(state)
         }),
         {
             // actions - mapDispatchToProps
-            onClose: close
+            onClose: close,
+            setUploadVisibility: setUploadVisibility,
+            upload: uploadDocument
         }
     ),
     compose(

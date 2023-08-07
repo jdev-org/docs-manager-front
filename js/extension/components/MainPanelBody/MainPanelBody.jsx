@@ -8,36 +8,30 @@ import {
     downloadDocument,
     getDocuments,
     showDocument,
-    uploadDocument,
+    uploadDocument
 } from "@js/extension/stateManagement/actions/actions";
-import { getDocuments as getPluginDocuments } from "@js/extension/stateManagement/selector/selector";
-import { Button, Row } from "react-bootstrap";
+import { getDocuments as getPluginDocuments, getUploadVisibility } from "@js/extension/stateManagement/selector/selector";
+import { Button, Row, Col, Table } from "react-bootstrap";
 import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
-import { Glyphicon } from "react-bootstrap";
 import DocumentRow from "../DocumentRow/DocumentRow";
-const MainPanelBody = ({
-	documents = [],
-    refresh = () => {},
-    upload = () => {},
-    deleteDoc = () => {},
-    show = () => {},
-    download = () => {},
-}) => {
 
-	if (isEmpty(documents)) {
-		return <InformationArea
-			isVisible
-			title="Aucun document"
-			message="La liste des documents est vide."
-			glyph="eye-close"
-		/>
-	}
+import "./MainPanelBody.css";
+
+const MainPanelBody = ({
+    documents = [],
+    refresh = () => {},
+    deleteDocument = () => {},
+    show = () => {},
+    download = () => { },
+    uploadVisibility
+}) => {
     const toolbarButtons = [
         {
             key: "docs-manager-refresh",
             id: "docs-manager-refresh",
             className: "",
             glyph: "repeat",
+            text: "",
             bsStyle: "primary",
             tooltipId: "extension.refresh",
             onClick: () => refresh(),
@@ -46,27 +40,51 @@ const MainPanelBody = ({
 
     return (
         <>
-            <Row>
-                <Toolbar
-                    id="docs-manager-header-toolbar"
-                    buttons={toolbarButtons}
+            {isEmpty(documents) && (
+                <InformationArea
+                    isVisible
+                    title="Aucun document"
+                    message="La liste des documents est vide."
+                    glyph="eye-close"
                 />
-            </Row>
-            {documents.map((document) => (<DocumentRow/>))}
-            <Button id="docs-manager-upload">
-                <Glyphicon glyph="plus" />
-            </Button>
+            )}
+            {!isEmpty(documents) && (
+                <>
+                    <Col xs={12}>
+                        <Toolbar
+                            id="docs-manager-header-toolbar"
+                            buttons={toolbarButtons}
+                        />
+                    </Col>
+                    <Col xs={12}>
+                        <Table responsive className="docs-table">
+                            <tbody className="docs-tbody">
+                                {documents.map((document) => {
+                                    let docProps = {
+                                        deleteDocument,
+                                        show,
+                                        download,
+                                        ...document,
+                                    };
+                                    return <DocumentRow {...docProps} />;
+                                })}
+                            </tbody>
+                        </Table>
+                    </Col>
+                </>
+            )}
         </>
     );
 };
 export default connect(
     (state) => ({
         documents: getPluginDocuments(state),
+        uploadVisibility: getUploadVisibility(state)
     }),
     {
         refresh: getDocuments,
         upload: uploadDocument,
-        deleteDoc: deleteDocument,
+        deleteDocument: deleteDocument,
         show: showDocument,
         download: downloadDocument,
     }

@@ -5,6 +5,7 @@ import {
     RESET_DOCSMANAGER_STATE,
     SETUP,
     SET_DOCUMENTS,
+    SET_UPLOAD_VISIBILITY,
 } from "../actions/actions";
 
 const initialState = {
@@ -13,10 +14,14 @@ const initialState = {
     activate: false,
     documents: [],
     document: null,
+    uploadVisibility: false,
 };
 
 export default function reducers(state = initialState, action) {
     switch (action.type) {
+        case SET_UPLOAD_VISIBILITY:
+            console.log("SET VISIBILITY");
+            return set("uploadVisibility", action.visible, state);
         case ADD_DOCUMENT:
             return set("document", action.document, state);
         case SET_DOCUMENTS:
