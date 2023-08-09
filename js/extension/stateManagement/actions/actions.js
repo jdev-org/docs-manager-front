@@ -76,9 +76,10 @@ export const resetDocsManagerState = () => ({
  * @param {object} document
  * @returns {{document: object}}
  */
-export const uploadDocument = (document) => ({
+export const uploadDocument = (file, params) => ({
     type: UPLOAD_DOCUMENT,
-    document,
+    file,
+    params,
 });
 
 /**

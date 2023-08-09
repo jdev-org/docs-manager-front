@@ -30,7 +30,7 @@ export default function reducers(state = initialState, action) {
             console.log(action.cfg);
             return set("pluginCfg", action.cfg, state);
         case RESET_DOCSMANAGER_STATE:
-            return compose(set("documents", []), set("document", null))(state);
+            return compose(set("documents", []), set("document", null), set("uploadVisibility", false))(state);
         default:
             return state;
     }

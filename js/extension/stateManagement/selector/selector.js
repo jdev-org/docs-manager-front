@@ -17,10 +17,14 @@ export const isActive = (state) => {
  * @returns {object}
  */
 export const getPluginCfg = (state) => state?.docsManager?.pluginCfg;
-export const getDocuments = (state) => state?.docsManager?.documents;
+export const getApiDocuments = (state) => state?.docsManager?.documents;
 
 export const getApi = (state) => state?.docsManager?.api;
 export const getId = (state) => state?.docsManager?.id;
+export const getStatus = (state) => state?.docsManager?.pluginCfg?.statusValues;
+export const getFields = (state) => state?.docsManager?.pluginCfg?.fields;
+export const getEntity = (state) => state?.docsManager?.pluginCfg?.entity;
+export const getRequired = (state) => state?.docsManager?.pluginCfg?.requiredFields;
 export const getUploadVisibility = (state) =>
     state?.docsManager.uploadVisibility;
 

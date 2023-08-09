@@ -25,8 +25,20 @@ export const showDocument = (url = "") => {
     return downloadDocument(url).then((r) => r);
 };
 
-export const uploadDocument = (api = "", plugin) => {
-    return fetch(`${api}/plugin/${plugin}`, { method: "POST", body: {} }).then(
-        (r) => r.json()
+export const verifyLabel = (api = "", plugin = "", label) => {
+    return fetch(`${api}/plugin/${plugin}/label/${label}`).then((r) =>
+        r.json()
     );
 };
+
+export function uploadDocument(api = "", plugin = "", file, params) {
+    let formData = new FormData();
+    formData.append("file", file);
+    return axios.post(`${api}/plugin/${plugin}`,
+        formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            params: params
+        });
+}

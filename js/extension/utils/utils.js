@@ -2,7 +2,7 @@ import { isEmpty } from "lodash";
 export const paramToString = (params = {}) => {
     let urlParams = "";
     if (!isEmpty(params)) {
-        urlParams = new URLSearchParams(...params);
+        urlParams = new URLSearchParams(params);
         urlParams = `?${urlParams.toString()}`;
     }
     return urlParams;

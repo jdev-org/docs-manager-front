@@ -8,7 +8,7 @@ import { CONTROL_NAME } from "../constants";
 
 import '../assets/style.css';
 
-import { getAuthLevel, getUploadVisibility, isActive } from "../stateManagement/selector/selector";
+import { getAuthLevel, getEntity, getFields, getStatus, getUploadVisibility, getRequired, isActive, getApiDocuments } from "../stateManagement/selector/selector";
 import reducers from "../stateManagement/reducers/reducers";
 import { setup, close, setUploadVisibility, uploadDocument } from "../stateManagement/actions/actions";
 import * as epics from "../stateManagement/epics/epicsDistributor";
@@ -26,7 +26,12 @@ const component = compose(
             // selectors
             active: isActive(state),
             authorized: getAuthLevel(state),
-            isUpload: getUploadVisibility(state)
+            isUpload: getUploadVisibility(state),
+            entity: getEntity(state),
+            statusValues: getStatus(state),
+            required: getRequired(state),
+            fields: getFields(state),
+            documents: getApiDocuments(state)
         }),
         {
             // actions - mapDispatchToProps
