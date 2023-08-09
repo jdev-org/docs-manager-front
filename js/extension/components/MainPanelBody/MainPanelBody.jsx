@@ -10,7 +10,7 @@ import {
     showDocument,
     uploadDocument
 } from "@js/extension/stateManagement/actions/actions";
-import { getDocuments as getPluginDocuments, getUploadVisibility } from "@js/extension/stateManagement/selector/selector";
+import { getApiDocuments, getUploadVisibility } from "@js/extension/stateManagement/selector/selector";
 import { Button, Row, Col, Table } from "react-bootstrap";
 import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
 import DocumentRow from "../DocumentRow/DocumentRow";
@@ -22,8 +22,7 @@ const MainPanelBody = ({
     refresh = () => {},
     deleteDocument = () => {},
     show = () => {},
-    download = () => { },
-    uploadVisibility
+    download = () => { }
 }) => {
     const toolbarButtons = [
         {
@@ -56,7 +55,7 @@ const MainPanelBody = ({
                             buttons={toolbarButtons}
                         />
                     </Col>
-                    <Col xs={12}>
+                    <Col xs={12} className="docs-div-table">
                         <Table responsive className="docs-table">
                             <tbody className="docs-tbody">
                                 {documents.map((document) => {
@@ -78,12 +77,10 @@ const MainPanelBody = ({
 };
 export default connect(
     (state) => ({
-        documents: getPluginDocuments(state),
-        uploadVisibility: getUploadVisibility(state)
+        documents: getApiDocuments(state)
     }),
     {
         refresh: getDocuments,
-        upload: uploadDocument,
         deleteDocument: deleteDocument,
         show: showDocument,
         download: downloadDocument,

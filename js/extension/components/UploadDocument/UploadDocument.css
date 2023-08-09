@@ -1,0 +1,16 @@
+.docs-drop-area .alert-info {
+    padding: 30px;
+    background-color: rgb(188 188 188 / 25%);
+    color: rgb(115 115 115 / 80%);
+    border-color: rgb(188 188 188 / 30%);
+    padding: 15px;
+}
+
+.docs-upload-form .control-label {
+    margin-top: 10px;
+}
+
+.docs-invalid {
+    border-color:red;
+    color: red;
+}

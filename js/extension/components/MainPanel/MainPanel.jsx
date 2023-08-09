@@ -12,6 +12,15 @@ const MainPanel = ({
     isUpload,
     upload,
     setUploadVisibility,
+    fields,
+    statusValues,
+    required,
+    entity,
+    documents,
+    refresh,
+    show,
+    download,
+    deleteDocument,
 }) => {
     if (!active) return null;
 
@@ -28,11 +37,19 @@ const MainPanel = ({
                             <UploadDocument
                                 upload={upload}
                                 close={() => setUploadVisibility(false)}
+                                fields={fields}
+                                statusValues={statusValues}
+                                entity={entity}
+                                required={required}
+                                documents={documents}
                             />
                         ) : (
                             <>
                                 <MainPanelBody />
-                                <Col xs={12} className={"text-right"}>
+                                <Col
+                                    xs={12}
+                                    className={"text-right docs-add-btn-div"}
+                                >
                                     <Button
                                         id="docs-manager-upload"
                                         bsStyle="primary"

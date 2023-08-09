@@ -1,17 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import Dropzone from "react-dropzone";
 import { Glyphicon } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 
 const DropArea = ({
-    setFile = () => {}
+    onDrop = () => { },
+    className = "",
+    label = ""
 }) => {
+    
     return (
         <Dropzone
             key="dropzone"
             rejectClassName="alert-danger"
-            className="alert alert-info col-xs-12"
-            onDrop={setFile}
+            className={`alert alert-info col-xs-12 ${className}`}
+            onDrop={onDrop}
             style={{
                 margin: "0px !important",
                 borderStyle: "dashed",
@@ -27,11 +30,10 @@ const DropArea = ({
             <Col xs={12} className="text-center">
                 <div>
                     <Glyphicon glyph="upload" style={{ paddingRight: "5px" }} />
-                    <br />
-                    Gisser ou cliquer
-                    <p style={{ color: "grey", marginTop: "5px" }}>
-                        NOM DE FICHIER
+                    <p>
+                        Cliquer ou glisser un fichier...
                     </p>
+                    {label &&( <p>{label}</p>)}
                 </div>
             </Col>
         </Dropzone>

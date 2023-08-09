@@ -14,6 +14,7 @@ export function getDocumentsById(action$, store) {
         .ofType(GET_DOCUMENTS)
         .filter(() => isActive(store.getState()))
         .switchMap((action) => {
+            console.log(store.getState())
             const apiUrl = getPluginCfg(store.getState()).api;
             const idPlugin = getPluginCfg(store.getState()).id;
             let observable$ = Rx.Observable.empty();
