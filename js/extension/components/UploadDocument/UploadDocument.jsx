@@ -141,7 +141,7 @@ const UploadDocument = ({
                             >
                                 <Glyphicon
                                     style={{ marginRight: "5px" }}
-                                    glyph={validLabel() ? "info-sign" : "warning-sign"}
+                                    glyph={validLabel() ? "info-sign" : "alert"}
                                 />
                                 Le libellé doit être unique. La taille du
                                 fichier ne doit pas dépasser 50 Mo.
@@ -151,7 +151,7 @@ const UploadDocument = ({
                 </Col>
                 <Col xs={12}>
                     <Button
-                        className={isValid() ? "" : "disabled"}
+                        className={isValid() && validLabel() ? "" : "disabled"}
                         block
                         onClick={() =>
                             isValid()
