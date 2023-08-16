@@ -34,7 +34,7 @@ export function uploadEvent(action$, store) {
                 .switchMap((data) => {
                     if (!isEmpty(data)) {
                         return Rx.Observable.of(
-                            displayMsg("error", "Upload", "Label déjà utilisé !")
+                            displayMsg("error", "Document", "Ce libellé est déjà utilisé !")
                         );
                     }
                     return Rx.Observable.defer(() =>
@@ -52,7 +52,16 @@ export function uploadEvent(action$, store) {
                             return Rx.Observable.of([]);
                         })
                         .switchMap((data) => {
-                            return Rx.Observable.of(getDocuments());
+                            if (data?.status && data.status == "200") {
+                                return Rx.Observable.of(
+                                    displayMsg("success", "Document", "Sauvegarde réussie !"),
+                                    getDocuments()
+                                );   
+                            } else {
+                                return Rx.Observable.of(
+                                    displayMsg("error", "Document", "Echec de la sauvegarde !"),
+                                )
+                            }
                         });
                 });
         });
