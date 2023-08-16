@@ -17,3 +17,9 @@ export function clickUrl(url, title) {
     link.remove();
     window.URL.revokeObjectURL(url);
 }
+
+export function showDocInTab(data) {
+    const fileURL = window.URL.createObjectURL(data);
+    const tab = window.open();
+    tab.location.href = fileURL
+}

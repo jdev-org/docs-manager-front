@@ -22,7 +22,7 @@ export const downloadDocument = (url = "") => {
 };
 
 export const showDocument = (url = "") => {
-    return downloadDocument(url).then((r) => r);
+    return fetch(url).then(r => r.blob());
 };
 
 export const verifyLabel = (api = "", plugin = "", label) => {
