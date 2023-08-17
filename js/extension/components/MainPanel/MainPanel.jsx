@@ -17,10 +17,6 @@ const MainPanel = ({
     required,
     entity,
     documents,
-    refresh,
-    show,
-    download,
-    deleteDocument,
 }) => {
     if (!active) return null;
 

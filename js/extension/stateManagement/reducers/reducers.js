@@ -14,7 +14,7 @@ const initialState = {
     activate: false,
     documents: [],
     document: null,
-    uploadVisibility: false,
+    uploadVisibility: false
 };
 
 export default function reducers(state = initialState, action) {
