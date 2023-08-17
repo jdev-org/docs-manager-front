@@ -37,8 +37,8 @@ export function deleteDocumentOnClick(action$, store) {
                     return Rx.Observable.of(
                         displayMsg(
                             "success",
-                            "Téléchargement",
-                            "Document téléchargé!"
+                            "Document",
+                            "Suppression réussie !"
                         ),
                         getDocuments()
                     );

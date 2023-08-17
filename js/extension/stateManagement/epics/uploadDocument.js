@@ -1,5 +1,5 @@
 import Rx from "rxjs";
-import { UPLOAD_DOCUMENT, displayMsg, getDocuments } from "../actions/actions";
+import { UPLOAD_DOCUMENT, displayMsg, getDocuments, setUploadVisibility } from "../actions/actions";
 import { getPluginCfg, isActive } from "../selector/selector";
 import { isEmpty } from "lodash";
 
@@ -55,8 +55,9 @@ export function uploadEvent(action$, store) {
                             if (data?.status && data.status == "200") {
                                 return Rx.Observable.of(
                                     displayMsg("success", "Document", "Sauvegarde réussie !"),
-                                    getDocuments()
-                                );   
+                                    getDocuments(),
+                                    setUploadVisibility(false)
+                                );
                             } else {
                                 return Rx.Observable.of(
                                     displayMsg("error", "Document", "Echec de la sauvegarde !"),

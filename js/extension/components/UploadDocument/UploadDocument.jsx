@@ -58,7 +58,6 @@ const UploadDocument = ({
                 <DropArea
                     label={(file && file?.name) || ""}
                     onDrop={(f) => {
-                        console.log(f);
                         setFile(f[0]);
                     }}
                 />
@@ -81,7 +80,7 @@ const UploadDocument = ({
                                         className={
                                             validLabel() ? "" : "docs-invalid"
                                         }
-                                        value={label}
+                                        value={label || file?.name}
                                         placeholder="document.pdf"
                                         onChange={(x) => {
                                             setLabel(x.target.value);
