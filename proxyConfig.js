@@ -20,19 +20,5 @@ module.exports = {
         headers: {
             host: "dev.mapstore.geo-solutions.it",
         },
-    },
-    "/proxy": {
-        target: "localhost/",
-        secure: false,
-        headers: {
-            host: "http://localhost:8082",
-        },
-    },
-    "/files": {
-        target: "http://localhost:8081",
-        secure: false,
-        headers: {
-            host: "http://localhost:8082",
-        },
-    },
+    }
 };

@@ -1,10 +1,8 @@
 {
   "plugins": [
     {
-      "name": "SampleExtension",
-      "dependencies": [
-        "Toolbar"
-      ]
+      "name": "DocsManager",
+      "dependencies": ["Toolbar"]
     }
   ]
 }
