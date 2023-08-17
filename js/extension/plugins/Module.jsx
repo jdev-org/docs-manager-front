@@ -60,7 +60,7 @@ export default createPlugin(name, {
         SidebarMenu: {
             name: "docsManager",
             position: 10,
-            icon: <Glyphicon glyph="list"/>,
+            icon: <Glyphicon glyph="level-up"/>,
             doNotHide: true,
             action: toggleControl.bind(null, CONTROL_NAME, null),
             priority: 1
