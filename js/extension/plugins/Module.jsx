@@ -4,6 +4,7 @@ import { name } from '../../../config';
 import { toggleControl } from "@mapstore/actions/controls";
 import {createPlugin} from "@mapstore/utils/PluginsUtils";
 import MainPanel from "../components/MainPanel/MainPanel";
+import SidebarElement from "@mapstore/components/sidebarmenu/SidebarElement"
 import { CONTROL_NAME } from "../constants";
 
 import '../assets/style.css';

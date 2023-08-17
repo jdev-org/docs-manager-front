@@ -1,8 +1,9 @@
 {
-    "locale": "fr-FR",
-    "messages": {
-        "extension": {
-            "message": "Message francais!"
-        }
+  "locale": "fr-FR",
+  "messages": {
+    "extension": {
+      "message": "Messaggio!",
+      "refresh": "Actualiser la liste"
     }
+  }
 }

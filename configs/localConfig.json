@@ -275,8 +275,9 @@
       },
       {
         "name": "Locate",
+        "showIn": ["DocsManager"],
         "override": {
-          "Toolbar": {
+          "DocsManager": {
             "alwaysVisible": true
           }
         }
@@ -361,6 +362,7 @@
       {
         "name": "DocsManager",
         "cfg": {
+          "icon": "1-line",
           "id": "carteaux",
           "role": "SV_PWRS_CARTEAUX_CAR",
           "api": "http://localhost:8081/files",

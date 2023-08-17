@@ -5,6 +5,7 @@ import MainPanelBody from "../MainPanelBody/MainPanelBody";
 import { Glyphicon } from "react-bootstrap";
 import UploadDocument from "../UploadDocument/UploadDocument";
 import "./MainPanel.css";
+import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
 
 const MainPanel = ({
     active = false,
