@@ -9,7 +9,7 @@ import "./DocumentRow.css";
 const DocumentRow = (props) => {
     return (
         <tr>
-            <td>{props.name}</td>
+            <td>{props.label}</td>
             <td>
                 <Button className="docActionBtn" id={uniqueId("doc_show_")} onClick={() => props.download(props.id)}>
                     <Glyphicon glyph="download-alt" />

@@ -31,10 +31,9 @@ export const getUploadVisibility = (state) =>
 // to emulate authentication use test_env and sec-roles header as : "ROLE_MAPSTORE_ADMIN;ROLE_EL_APPLIS_CAD_CNIL1" (; separator)
 export const getAuthLevel = (state) => {
     const groups = userGroupSecuritySelector(state) ?? [];
-    // const groupNames = groups.map(({ groupName }) => groupName);
-    const groupNames = ["MAPSTORE_ADMIN"];
+    const groupNames = groups.map(({ groupName }) => groupName);
     let allowedRoles = getPluginCfg(state)?.allowedRoles;
-    if (!allowedRoles || !allowedRoles.length) {
+    if (isEmpty(allowedRoles)) {
         allowedRoles = ["MAPSTORE_ADMIN"];
     }
     const fullyAuthorized = !isEmpty(

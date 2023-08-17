@@ -20,14 +20,12 @@ const initialState = {
 export default function reducers(state = initialState, action) {
     switch (action.type) {
         case SET_UPLOAD_VISIBILITY:
-            console.log("SET VISIBILITY");
             return set("uploadVisibility", action.visible, state);
         case ADD_DOCUMENT:
             return set("document", action.document, state);
         case SET_DOCUMENTS:
             return set("documents", action.documents, state);
         case SETUP:
-            console.log(action.cfg);
             return set("pluginCfg", action.cfg, state);
         case RESET_DOCSMANAGER_STATE:
             return compose(set("documents", []), set("document", null), set("uploadVisibility", false))(state);
