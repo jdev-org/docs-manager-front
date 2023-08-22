@@ -26,7 +26,7 @@ export const showDocument = (url = "") => {
 };
 
 export const verifyLabel = (api = "", plugin = "", label) => {
-    return fetch(`${api}/plugin/${plugin}/label/${label}`).then((r) =>
+    return fetch(`${api}/label/exists/${label}`).then((r) =>
         r.json()
     );
 };

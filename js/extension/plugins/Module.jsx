@@ -65,6 +65,14 @@ export default createPlugin(name, {
             doNotHide: true,
             action: toggleControl.bind(null, CONTROL_NAME, null),
             priority: 1
+        },
+        d2t: {
+            name: "docsManager",
+            position: 10,
+            icon: <Glyphicon glyph="level-up"/>,
+            doNotHide: true,
+            action: toggleControl.bind(null, CONTROL_NAME, null),
+            priority: 1
         }
     }
 });

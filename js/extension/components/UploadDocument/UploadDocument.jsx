@@ -35,6 +35,7 @@ const UploadDocument = ({
     const [dateDoc, setDateDoc] = useState("");
 
     const validLabel = () => {
+        if (label.length < 3) return false;
         if (!label) return true;
         return !documents.map((d) => d.label).includes(label);
     };
@@ -59,8 +60,16 @@ const UploadDocument = ({
                     label={(file && file?.name) || ""}
                     onDrop={(f) => {
                         setFile(f[0]);
+                        setLabel(f[0]?.name);
                     }}
                 />
+                <HelpBlock>
+                    <Glyphicon
+                        style={{ marginRight: "5px" }}
+                        glyph={"info-sign"}
+                    />
+                    La taille du fichier ne doit pas dépasser 50 Mo.
+                </HelpBlock>
             </Col>
             <div>
                 <Col xs={12}>
@@ -80,12 +89,22 @@ const UploadDocument = ({
                                         className={
                                             validLabel() ? "" : "docs-invalid"
                                         }
-                                        value={label || file?.name}
+                                        value={label}
                                         placeholder="document.pdf"
                                         onChange={(x) => {
                                             setLabel(x.target.value);
                                         }}
                                     />
+                                    {!validLabel() && (
+                                        <HelpBlock className={"docs-invalid"}>
+                                            <Glyphicon
+                                                style={{ marginRight: "5px" }}
+                                                glyph={"alert"}
+                                            />
+                                            Le libellé doit être unique et d'au
+                                            moins 3 caractères.
+                                        </HelpBlock>
+                                    )}
                                 </>
                             )}
                             {fields.includes("comment") && (
@@ -135,16 +154,6 @@ const UploadDocument = ({
                             )}
 
                             <FormControl.Feedback />
-                            <HelpBlock
-                                className={validLabel() ? "" : "docs-invalid"}
-                            >
-                                <Glyphicon
-                                    style={{ marginRight: "5px" }}
-                                    glyph={validLabel() ? "info-sign" : "alert"}
-                                />
-                                Le libellé doit être unique. La taille du
-                                fichier ne doit pas dépasser 50 Mo.
-                            </HelpBlock>
                         </FormGroup>
                     </form>
                 </Col>

@@ -1,7 +1,7 @@
 import Rx from "rxjs";
 import { UPLOAD_DOCUMENT, displayMsg, getDocuments, setUploadVisibility } from "../actions/actions";
-import { getPluginCfg, isActive } from "../selector/selector";
-import { isEmpty } from "lodash";
+import { getPluginCfg, isActive, getEntity } from "../selector/selector";
+import { isEmpty, get } from "lodash";
 
 import {
     uploadDocument,
@@ -29,20 +29,27 @@ export function uploadEvent(action$, store) {
                     console.log("Error - Get list of documents");
                     console.log(e);
                     // fail message
-                    return Rx.Observable.of([]);
+                    return true
                 })
-                .switchMap((data) => {
-                    if (!isEmpty(data)) {
+                .switchMap(labelExists => {
+                    if (labelExists) {
                         return Rx.Observable.of(
                             displayMsg("error", "Document", "Ce libellé est déjà utilisé !")
                         );
+                    }
+                    const entityProperties = getEntity(store.getState()?.properties);
+                    const entityAttribute = getPluginCfg(store.getState())?.entity?.attribute;
+                    const entity = get(entityProperties, entityAttribute);
+                    let params = action.params;
+                    if (entity) {
+                        params = { ...params, entity: entity };
                     }
                     return Rx.Observable.defer(() =>
                         uploadDocument(
                             apiUrl,
                             idPlugin,
                             action.file,
-                            action.params
+                            params
                         )
                     )
                         .catch((e) => {
