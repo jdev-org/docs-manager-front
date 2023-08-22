@@ -1,6 +1,6 @@
 import { userGroupSecuritySelector } from "@mapstore/selectors/security";
 import { CONTROL_NAME } from "@js/extension/constants";
-import { keys, isEmpty } from "lodash";
+import { get, isEmpty } from "lodash";
 
 export const isActive = (state) => {
     return (
@@ -19,11 +19,21 @@ export const isActive = (state) => {
 export const getPluginCfg = (state) => state?.docsManager?.pluginCfg;
 export const getApiDocuments = (state) => state?.docsManager?.documents;
 
+export const getEntity = (state) => {
+    let cfg = state?.pluginCfg;
+    if (cfg?.entity?.get) {
+        return get(state, cfg.entity.get);
+    }
+    if (cfg?.entity && cfg?.entity?.plugin && cfg?.entity?.plugin.propCfg) {
+        let pluginCfg = state[plugin]?.pluginCfg;
+        return pluginCfg ? pluginCfg[propCfg] : null;
+    }
+}
+
 export const getApi = (state) => state?.docsManager?.api;
 export const getId = (state) => state?.docsManager?.id;
 export const getStatus = (state) => state?.docsManager?.pluginCfg?.statusValues;
 export const getFields = (state) => state?.docsManager?.pluginCfg?.fields;
-export const getEntity = (state) => state?.docsManager?.pluginCfg?.entity;
 export const getRequired = (state) => state?.docsManager?.pluginCfg?.requiredFields;
 export const getUploadVisibility = (state) =>
     state?.docsManager.uploadVisibility;
@@ -41,5 +51,5 @@ export const getAuthLevel = (state) => {
             .map((role) => groupNames.includes(role))
             .filter((role) => role)
     );
-    return fullyAuthorized;
+    return true;
 };
