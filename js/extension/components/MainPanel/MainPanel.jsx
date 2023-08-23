@@ -5,7 +5,6 @@ import MainPanelBody from "../MainPanelBody/MainPanelBody";
 import { Glyphicon } from "react-bootstrap";
 import UploadDocument from "../UploadDocument/UploadDocument";
 import "./MainPanel.css";
-import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
 
 const MainPanel = ({
     active = false,
@@ -19,19 +18,21 @@ const MainPanel = ({
     entity,
     documents,
     idToDelete,
+    idToConsult,
     controlUpload,
-    uploadValidation
+    uploadValidation,
+    setIdToConsult
 }) => {
     if (!active) return null;
 
     return (
         <div className="static-modal">
-            <Modal show={active} onHide={onClose}>
+            <Modal className="docs-modal" show={active} onHide={onClose} bsSize="large">
                 <Modal.Header closeButton>
                     <Modal.Title>Documents</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
+                <Modal.Body className="docs-modal-body">
                     <Row>
                         {isUpload && (
                             <UploadDocument
@@ -51,7 +52,7 @@ const MainPanel = ({
                             !isUpload && (<MainPanelBody />)
                         }
 
-                        {!isUpload && !idToDelete && (
+                        {!isUpload && !idToDelete && !idToConsult && (
                             <Col
                                 xs={12}
                                 className={"text-right docs-add-btn-div"}
@@ -72,7 +73,17 @@ const MainPanel = ({
 
                 <Modal.Footer>
                     {isUpload && (
-                        <Button onClick={() => setUploadVisibility(false)}>
+                        <Button bsStyle="primary" onClick={() => setUploadVisibility(false)}>
+                            Annuler
+                        </Button>
+                    )}
+                    {idToConsult && (
+                        <Button bsStyle="warning" onClick={() => setIdToConsult(null)}>
+                            Retour
+                        </Button>
+                    )}
+                    {idToDelete && (
+                        <Button bsStyle="primary" onClick={() => setIdToConsult(null)}>
                             Annuler
                         </Button>
                     )}

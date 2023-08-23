@@ -5,6 +5,7 @@ import {
     RESET_DOCSMANAGER_STATE,
     SETUP,
     SET_DOCUMENTS,
+    SET_ID_TO_CONSULT,
     SET_ID_TO_DELETE,
     SET_UPLOAD_VISIBILITY,
     VALID_VALUES,
@@ -18,13 +19,22 @@ const initialState = {
     document: null,
     uploadVisibility: false,
     idToDelete: null,
+    idToConsult: null,
     uploadIsValid: false
 };
 
 export default function reducers(state = initialState, action) {
     switch (action.type) {
+        case SET_ID_TO_CONSULT:
+            return compose(
+                set("idToConsult", action.id),
+                set("idToDelete", null),
+            )(state);
         case SET_ID_TO_DELETE:
-            return set("idToDelete", action.id, state);
+            return compose(
+                set("idToConsult", null),
+                set("idToDelete", action.id),
+            )(state);
         case VALID_VALUES:
             return set("uploadIsValid", action.values, state);
         case SET_UPLOAD_VISIBILITY:
@@ -40,7 +50,8 @@ export default function reducers(state = initialState, action) {
                 set("documents", []),
                 set("document", null),
                 set("uploadVisibility", false),
-                set("idToDelete", null)
+                set("idToDelete", null),
+                set("idToConsult", null)
             )(state);
         default:
             return state;

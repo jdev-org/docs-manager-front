@@ -27,7 +27,6 @@ const UploadDocument = ({
     statusValues,
     fields,
     required,
-    documents = [],
     controlUpload = () => { },
     uploadValidation
 }) => {
@@ -36,6 +35,13 @@ const UploadDocument = ({
     const [comment, setComment] = useState("");
     const [status, setStatus] = useState("");
     const [dateDoc, setDateDoc] = useState("");
+
+    const isValidLabel = () => {
+        if (!label || !label.length || !uploadValidation?.label) {
+            return false
+        }
+        return true;
+    }
 
     const isValid = () => {
         const requiredMissing = [];
@@ -68,10 +74,20 @@ const UploadDocument = ({
                     />
                     La taille du fichier ne doit pas dépasser 50 Mo.
                 </HelpBlock>
+                {!isValidLabel() && (
+                    <HelpBlock className={"docs-invalid"}>
+                        <Glyphicon
+                            style={{ marginRight: "5px" }}
+                            glyph={"alert"}
+                        />
+                        Le libellé doit être unique et d'au
+                        moins 3 caractères.
+                    </HelpBlock>
+                )}
             </Col>
             <div>
                 <Col xs={12}>
-                    <h4>Informations sur le document :</h4>
+                    <strong>Informations sur le document :</strong>
                 </Col>
                 <Col xs={12}>
                     <form>
@@ -80,11 +96,11 @@ const UploadDocument = ({
                             validationState={() => {}}
                         >
                             {fields.includes("label") && (
-                                <>
+                                <Col xs={6}>
                                     <ControlLabel>Titre :</ControlLabel>
                                     <SearchText
                                         className={
-                                            uploadValidation?.label ? "" : "docs-invalid"
+                                            isValidLabel() ? "" : "docs-invalid"
                                         }
                                         value={label}
                                         placeholder="document.pdf"
@@ -94,20 +110,10 @@ const UploadDocument = ({
                                         }}
                                         onChange={setLabel}
                                     />
-                                    {!uploadValidation?.label && (
-                                        <HelpBlock className={"docs-invalid"}>
-                                            <Glyphicon
-                                                style={{ marginRight: "5px" }}
-                                                glyph={"alert"}
-                                            />
-                                            Le libellé doit être unique et d'au
-                                            moins 3 caractères.
-                                        </HelpBlock>
-                                    )}
-                                </>
+                                </Col>
                             )}
                             {fields.includes("comment") && (
-                                <>
+                                <Col xs={6}>
                                     <ControlLabel>Commentaire:</ControlLabel>
                                     <FormControl
                                         type="text"
@@ -117,10 +123,10 @@ const UploadDocument = ({
                                             setComment(x.target.value);
                                         }}
                                     />
-                                </>
+                                </Col>
                             )}
                             {fields.includes("status") && (
-                                <>
+                                <Col xs={6}>
                                     <ControlLabel>Statut :</ControlLabel>
                                     <DropdownList
                                         data={statusValues.values}
@@ -128,11 +134,11 @@ const UploadDocument = ({
                                         placeholder="Statut du document..."
                                         onChange={(v) => setStatus(v)}
                                     />
-                                </>
+                                </Col>
                             )}
 
                             {fields.includes("dateDoc") && (
-                                <>
+                                <Col xs={6}>
                                     <ControlLabel>
                                         Date du document:
                                     </ControlLabel>
@@ -149,7 +155,7 @@ const UploadDocument = ({
                                         onSelect={(v) => setDateDoc(v)}
                                         onChange={(v) => setDateDoc(v)}
                                     />
-                                </>
+                                </Col>
                             )}
 
                             <FormControl.Feedback />
@@ -158,7 +164,8 @@ const UploadDocument = ({
                 </Col>
                 <Col xs={12}>
                     <Button
-                        className={isValid() && uploadValidation?.label ? "" : "disabled"}
+                        className={isValid() && isValidLabel() ? "" : "disabled"}
+                        style={{marginTop: "10px"}}
                         block
                         onClick={() =>
                             isValid()

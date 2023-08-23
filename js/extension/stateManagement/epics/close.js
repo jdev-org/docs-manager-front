@@ -9,7 +9,6 @@ export const closeExtension = (action$, store) =>
         .ofType(CLOSE)
         .filter(() => isActive(store.getState()))
         .switchMap(() => {
-            console.log("close");
             return Rx.Observable.of(
                 toggleControl(CONTROL_NAME, "enabled", false),
                 resetDocsManagerState()
