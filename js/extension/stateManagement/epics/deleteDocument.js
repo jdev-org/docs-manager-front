@@ -1,5 +1,5 @@
 import Rx from "rxjs";
-import { DELETE_DOCUMENT, getDocuments, displayMsg } from "../actions/actions";
+import { DELETE_DOCUMENT, getDocuments, displayMsg, setIdToDelete } from "../actions/actions";
 import { getPluginCfg, isActive } from "../selector/selector";
 
 import { deleteDocument } from "@js/extension/requests/documentsApi";
@@ -40,7 +40,8 @@ export function deleteDocumentOnClick(action$, store) {
                             "Document",
                             "Suppression réussie !"
                         ),
-                        getDocuments()
+                        setIdToDelete(null),
+                        getDocuments(),
                     );
                 });
         });

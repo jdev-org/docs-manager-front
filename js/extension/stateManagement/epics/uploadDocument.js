@@ -1,7 +1,7 @@
 import Rx from "rxjs";
 import { UPLOAD_DOCUMENT, displayMsg, getDocuments, setUploadVisibility } from "../actions/actions";
 import { getPluginCfg, isActive, getEntity } from "../selector/selector";
-import { isEmpty, get } from "lodash";
+import { uniqueId, get } from "lodash";
 
 import {
     uploadDocument,
@@ -44,6 +44,7 @@ export function uploadEvent(action$, store) {
                     if (entity) {
                         params = { ...params, entity: entity };
                     }
+                    params = {...params, entity: uniqueId()}
                     return Rx.Observable.defer(() =>
                         uploadDocument(
                             apiUrl,

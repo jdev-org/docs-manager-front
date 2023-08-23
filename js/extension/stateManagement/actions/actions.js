@@ -14,6 +14,24 @@ export const SHOW_DOCUMENT = "SHOW_DOCUMENT";
 export const SET_DOCUMENTS = "SET_DOCUMENTS";
 export const DOCS_LOADING = "DOCS_LOADING";
 export const SET_UPLOAD_VISIBILITY = "SET_UPLOAD_VISIBILITY";
+export const SET_ID_TO_DELETE = "SET_ID_TO_DELETE";
+export const VALID_VALUES = "VALID_VALUES";
+export const CONTROL_VALUES = "CONTROL_VALUES";
+
+export const controlValues = (values) => ({
+    type: CONTROL_VALUES,
+    values
+});
+
+export const validValues = (values) => ({
+    type: VALID_VALUES,
+    values
+});
+
+export const setIdToDelete = (id) => ({
+    type: SET_ID_TO_DELETE,
+    id
+});
 
 export const setUploadVisibility = (visible) => ({
     type: SET_UPLOAD_VISIBILITY,
