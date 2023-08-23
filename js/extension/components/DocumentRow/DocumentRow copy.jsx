@@ -3,8 +3,13 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { uniqueId } from "lodash";
 import { Glyphicon } from "react-bootstrap";
+import moment from "moment";
 
 import "./DocumentRow.css";
+
+import tooltip from "@mapstore/components/misc/enhancers/tooltip";
+import ButtonRB from "@mapstore/components/misc/Button";
+const ButtonToolTip = tooltip(ButtonRB);
 
 const iconsByFormat = {
     "application/pdf": "1-pdf",
@@ -30,14 +35,18 @@ const DocumentRow = (props) => {
                 <Glyphicon glyph={iconsByFormat[props.contentType]} />
             </td>
             <td>{props.label}</td>
-            <td style={{ borderLeft: "grey" }}>
-                <Button
-                    className="docActionBtn"
-                    id={uniqueId("doc_show_")}
-                    onClick={() => props.showAttributes(props.id)}
-                >
-                    <Glyphicon glyph="list-alt" />
-                </Button>
+            <td>{props.status}</td>
+            <td>{props?.dateDoc && moment(props.dateDoc,"YYYY-MM-DD").format("DD/MM/YYYY")}</td>
+            <td>
+                {props?.comment && (
+                    <ButtonToolTip
+                        style={{ textDecoration: "none" }}
+                        bsStyle="link"
+                        tooltip={props.comment}
+                    >
+                        <Glyphicon glyph="comment" />
+                    </ButtonToolTip>
+                )}
             </td>
             <td style={{ borderLeft: "grey" }}>
                 <Button

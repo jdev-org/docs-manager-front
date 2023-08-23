@@ -15,6 +15,7 @@ export const SET_DOCUMENTS = "SET_DOCUMENTS";
 export const DOCS_LOADING = "DOCS_LOADING";
 export const SET_UPLOAD_VISIBILITY = "SET_UPLOAD_VISIBILITY";
 export const SET_ID_TO_DELETE = "SET_ID_TO_DELETE";
+export const SET_ID_TO_CONSULT = "SET_ID_TO_CONSULT";
 export const VALID_VALUES = "VALID_VALUES";
 export const CONTROL_VALUES = "CONTROL_VALUES";
 
@@ -26,6 +27,11 @@ export const controlValues = (values) => ({
 export const validValues = (values) => ({
     type: VALID_VALUES,
     values
+});
+
+export const setIdToConsult = (id) => ({
+    type: SET_ID_TO_CONSULT,
+    id
 });
 
 export const setIdToDelete = (id) => ({

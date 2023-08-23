@@ -4,14 +4,13 @@ import { name } from '../../../config';
 import { toggleControl } from "@mapstore/actions/controls";
 import {createPlugin} from "@mapstore/utils/PluginsUtils";
 import MainPanel from "../components/MainPanel/MainPanel";
-import SidebarElement from "@mapstore/components/sidebarmenu/SidebarElement"
 import { CONTROL_NAME } from "../constants";
 
 import '../assets/style.css';
 
-import { getAuthLevel, getEntity, getFields, getStatus, getUploadVisibility, getRequired, isActive, getApiDocuments, getIdToDelete, getUploadValidation } from "../stateManagement/selector/selector";
+import { getAuthLevel, getEntity, getFields, getStatus, getUploadVisibility, getRequired, isActive, getApiDocuments, getIdToDelete, getUploadValidation, getIdToConsult } from "../stateManagement/selector/selector";
 import reducers from "../stateManagement/reducers/reducers";
-import { setup, close, setUploadVisibility, uploadDocument, controlValues } from "../stateManagement/actions/actions";
+import { setup, close, setUploadVisibility, uploadDocument, controlValues, setIdToConsult } from "../stateManagement/actions/actions";
 import * as epics from "../stateManagement/epics/epicsDistributor";
 import init from "./init";
 import { Glyphicon } from "react-bootstrap";
@@ -34,6 +33,7 @@ const component = compose(
             fields: getFields(state),
             documents: getApiDocuments(state),
             idToDelete: getIdToDelete(state),
+            idToConsult: getIdToConsult(state),
             uploadValidation: getUploadValidation(state)
         }),
         {
@@ -41,7 +41,8 @@ const component = compose(
             onClose: close,
             setUploadVisibility: setUploadVisibility,
             upload: uploadDocument,
-            controlUpload: controlValues
+            controlUpload: controlValues,
+            setIdToConsult: setIdToConsult
         }
     ),
     compose(

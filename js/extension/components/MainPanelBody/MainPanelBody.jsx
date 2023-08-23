@@ -7,30 +7,33 @@ import {
     deleteDocument,
     downloadDocument,
     getDocuments,
+    setIdToConsult,
     setIdToDelete,
-    showDocument,
-    uploadDocument,
+    showDocument
 } from "@js/extension/stateManagement/actions/actions";
 import {
     getApiDocuments,
+    getIdToConsult,
     getIdToDelete,
-    getUploadVisibility,
 } from "@js/extension/stateManagement/selector/selector";
-import { Button, Row, Col, Table } from "react-bootstrap";
+import { Col, Table } from "react-bootstrap";
 import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
 import DocumentRow from "../DocumentRow/DocumentRow";
 
 import "./MainPanelBody.css";
 import DeleteArea from "../commons/DeleteArea";
+import DocumentPanel from "../DocumentPanel/DocumentPanel";
 
 const MainPanelBody = ({
     documents = [],
     refresh = () => {},
     deleteDocument = () => {},
     show = () => {},
-    download = () => { },
+    download = () => {},
     idToDelete,
-    setIdToDelete = () => {}
+    setIdToDelete = () => {},
+    setIdToConsult = () => {},
+    idToConsult,
 }) => {
     const toolbarButtons = [
         {
@@ -59,6 +62,15 @@ const MainPanelBody = ({
         );
     }
 
+    if (idToConsult) {
+        return (
+            <DocumentPanel
+                    isVisible={idToConsult || false}
+                    doc={documents.filter((d) => d.id === idToConsult)[0]}
+                />
+        );
+    }
+
     return (
         <>
             {isEmpty(documents) && (
@@ -83,9 +95,13 @@ const MainPanelBody = ({
                                 {documents.map((document) => {
                                     let docProps = {
                                         deleteDocument: (id) =>
-                                            setIdToDelete(id),
+                                        {
+                                            setIdToDelete(id)
+                                        },
                                         show,
                                         download,
+                                        showAttributes: (id) =>
+                                            setIdToConsult(id),
                                         ...document,
                                     };
                                     return <DocumentRow {...docProps} />;
@@ -102,6 +118,7 @@ export default connect(
     (state) => ({
         documents: getApiDocuments(state),
         idToDelete: getIdToDelete(state),
+        idToConsult: getIdToConsult(state),
     }),
     {
         refresh: getDocuments,
@@ -109,5 +126,6 @@ export default connect(
         show: showDocument,
         download: downloadDocument,
         setIdToDelete: setIdToDelete,
+        setIdToConsult: setIdToConsult,
     }
 )(MainPanelBody);

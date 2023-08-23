@@ -19,6 +19,7 @@ export const isActive = (state) => {
 export const getPluginCfg = (state) => state?.docsManager?.pluginCfg;
 export const getApiDocuments = (state) => state?.docsManager?.documents;
 export const getIdToDelete = state => state?.docsManager?.idToDelete;
+export const getIdToConsult = state => state?.docsManager?.idToConsult;
 
 export const getEntity = (state) => {
     let cfg = state?.pluginCfg;
