@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { connect } from "react-redux";
 import { isEmpty } from "lodash";
@@ -7,22 +7,30 @@ import {
     deleteDocument,
     downloadDocument,
     getDocuments,
+    setIdToDelete,
     showDocument,
-    uploadDocument
+    uploadDocument,
 } from "@js/extension/stateManagement/actions/actions";
-import { getApiDocuments, getUploadVisibility } from "@js/extension/stateManagement/selector/selector";
+import {
+    getApiDocuments,
+    getIdToDelete,
+    getUploadVisibility,
+} from "@js/extension/stateManagement/selector/selector";
 import { Button, Row, Col, Table } from "react-bootstrap";
 import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
 import DocumentRow from "../DocumentRow/DocumentRow";
 
 import "./MainPanelBody.css";
+import DeleteArea from "../commons/DeleteArea";
 
 const MainPanelBody = ({
     documents = [],
     refresh = () => {},
     deleteDocument = () => {},
     show = () => {},
-    download = () => { }
+    download = () => { },
+    idToDelete,
+    setIdToDelete = () => {}
 }) => {
     const toolbarButtons = [
         {
@@ -36,6 +44,20 @@ const MainPanelBody = ({
             onClick: () => refresh(),
         },
     ];
+
+    if (idToDelete) {
+        return (
+            <DeleteArea
+                isVisible={idToDelete || false}
+                confirm={() => {
+                    deleteDocument(idToDelete);
+                }}
+                cancel={() => {
+                    setIdToDelete(null);
+                }}
+            />
+        );
+    }
 
     return (
         <>
@@ -60,7 +82,8 @@ const MainPanelBody = ({
                             <tbody className="docs-tbody">
                                 {documents.map((document) => {
                                     let docProps = {
-                                        deleteDocument,
+                                        deleteDocument: (id) =>
+                                            setIdToDelete(id),
                                         show,
                                         download,
                                         ...document,
@@ -77,12 +100,14 @@ const MainPanelBody = ({
 };
 export default connect(
     (state) => ({
-        documents: getApiDocuments(state)
+        documents: getApiDocuments(state),
+        idToDelete: getIdToDelete(state),
     }),
     {
         refresh: getDocuments,
         deleteDocument: deleteDocument,
         show: showDocument,
         download: downloadDocument,
+        setIdToDelete: setIdToDelete,
     }
 )(MainPanelBody);

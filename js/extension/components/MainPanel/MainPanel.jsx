@@ -18,6 +18,9 @@ const MainPanel = ({
     required,
     entity,
     documents,
+    idToDelete,
+    controlUpload,
+    uploadValidation
 }) => {
     if (!active) return null;
 
@@ -30,7 +33,7 @@ const MainPanel = ({
 
                 <Modal.Body>
                     <Row>
-                        {isUpload ? (
+                        {isUpload && (
                             <UploadDocument
                                 upload={upload}
                                 close={() => setUploadVisibility(false)}
@@ -39,26 +42,30 @@ const MainPanel = ({
                                 entity={entity}
                                 required={required}
                                 documents={documents}
+                                controlUpload={controlUpload}
+                                uploadValidation={uploadValidation}
                             />
-                        ) : (
-                            <>
-                                <MainPanelBody />
-                                <Col
-                                    xs={12}
-                                    className={"text-right docs-add-btn-div"}
+                        )}
+
+                        {
+                            !isUpload && (<MainPanelBody />)
+                        }
+
+                        {!isUpload && !idToDelete && (
+                            <Col
+                                xs={12}
+                                className={"text-right docs-add-btn-div"}
+                            >
+                                <Button
+                                    id="docs-manager-upload"
+                                    bsStyle="primary"
+                                    onClick={() =>
+                                        setUploadVisibility(!isUpload)
+                                    }
                                 >
-                                    <Button
-                                        id="docs-manager-upload"
-                                        bsStyle="primary"
-                                        onClick={() =>
-                                            setUploadVisibility(!isUpload)
-                                        }
-                                    >
-                                        <Glyphicon glyph="plus" /> Nouveau
-                                        document
-                                    </Button>
-                                </Col>
-                            </>
+                                    <Glyphicon glyph="plus" /> Nouveau document
+                                </Button>
+                            </Col>
                         )}
                     </Row>
                 </Modal.Body>

@@ -9,9 +9,9 @@ import { CONTROL_NAME } from "../constants";
 
 import '../assets/style.css';
 
-import { getAuthLevel, getEntity, getFields, getStatus, getUploadVisibility, getRequired, isActive, getApiDocuments } from "../stateManagement/selector/selector";
+import { getAuthLevel, getEntity, getFields, getStatus, getUploadVisibility, getRequired, isActive, getApiDocuments, getIdToDelete, getUploadValidation } from "../stateManagement/selector/selector";
 import reducers from "../stateManagement/reducers/reducers";
-import { setup, close, setUploadVisibility, uploadDocument } from "../stateManagement/actions/actions";
+import { setup, close, setUploadVisibility, uploadDocument, controlValues } from "../stateManagement/actions/actions";
 import * as epics from "../stateManagement/epics/epicsDistributor";
 import init from "./init";
 import { Glyphicon } from "react-bootstrap";
@@ -32,13 +32,16 @@ const component = compose(
             statusValues: getStatus(state),
             required: getRequired(state),
             fields: getFields(state),
-            documents: getApiDocuments(state)
+            documents: getApiDocuments(state),
+            idToDelete: getIdToDelete(state),
+            uploadValidation: getUploadValidation(state)
         }),
         {
             // actions - mapDispatchToProps
             onClose: close,
             setUploadVisibility: setUploadVisibility,
-            upload: uploadDocument
+            upload: uploadDocument,
+            controlUpload: controlValues
         }
     ),
     compose(

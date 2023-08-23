@@ -20,6 +20,7 @@ import momentLocalizer from "react-widgets/lib/localizers/moment";
 momentLocalizer(moment);
 
 import "./UploadDocument.css";
+import SearchText from "../commons/SearchText";
 
 const UploadDocument = ({
     upload = () => {},
@@ -27,6 +28,8 @@ const UploadDocument = ({
     fields,
     required,
     documents = [],
+    controlUpload = () => { },
+    uploadValidation
 }) => {
     const [file, setFile] = useState(null);
     const [label, setLabel] = useState("");
@@ -34,11 +37,6 @@ const UploadDocument = ({
     const [status, setStatus] = useState("");
     const [dateDoc, setDateDoc] = useState("");
 
-    const validLabel = () => {
-        if (label.length < 3) return false;
-        if (!label) return true;
-        return !documents.map((d) => d.label).includes(label);
-    };
     const isValid = () => {
         const requiredMissing = [];
         required.map((f) => {
@@ -84,18 +82,19 @@ const UploadDocument = ({
                             {fields.includes("label") && (
                                 <>
                                     <ControlLabel>Titre :</ControlLabel>
-                                    <FormControl
-                                        type="text"
+                                    <SearchText
                                         className={
-                                            validLabel() ? "" : "docs-invalid"
+                                            uploadValidation?.label ? "" : "docs-invalid"
                                         }
                                         value={label}
                                         placeholder="document.pdf"
-                                        onChange={(x) => {
-                                            setLabel(x.target.value);
+
+                                        search={(x) => {
+                                            controlUpload({label: x});
                                         }}
+                                        onChange={setLabel}
                                     />
-                                    {!validLabel() && (
+                                    {!uploadValidation?.label && (
                                         <HelpBlock className={"docs-invalid"}>
                                             <Glyphicon
                                                 style={{ marginRight: "5px" }}
@@ -122,11 +121,11 @@ const UploadDocument = ({
                             )}
                             {fields.includes("status") && (
                                 <>
-                                    <ControlLabel>Status :</ControlLabel>
+                                    <ControlLabel>Statut :</ControlLabel>
                                     <DropdownList
                                         data={statusValues.values}
                                         value={status}
-                                        placeholder="Status du document..."
+                                        placeholder="Statut du document..."
                                         onChange={(v) => setStatus(v)}
                                     />
                                 </>
@@ -159,7 +158,7 @@ const UploadDocument = ({
                 </Col>
                 <Col xs={12}>
                     <Button
-                        className={isValid() && validLabel() ? "" : "disabled"}
+                        className={isValid() && uploadValidation?.label ? "" : "disabled"}
                         block
                         onClick={() =>
                             isValid()

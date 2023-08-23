@@ -18,6 +18,7 @@ export const isActive = (state) => {
  */
 export const getPluginCfg = (state) => state?.docsManager?.pluginCfg;
 export const getApiDocuments = (state) => state?.docsManager?.documents;
+export const getIdToDelete = state => state?.docsManager?.idToDelete;
 
 export const getEntity = (state) => {
     let cfg = state?.pluginCfg;
@@ -30,6 +31,7 @@ export const getEntity = (state) => {
     }
 }
 
+export const getUploadValidation = (state) => state?.docsManager?.uploadIsValid;
 export const getApi = (state) => state?.docsManager?.api;
 export const getId = (state) => state?.docsManager?.id;
 export const getStatus = (state) => state?.docsManager?.pluginCfg?.statusValues;
