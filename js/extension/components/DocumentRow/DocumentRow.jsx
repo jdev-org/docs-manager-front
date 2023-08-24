@@ -6,6 +6,10 @@ import { Glyphicon } from "react-bootstrap";
 
 import "./DocumentRow.css";
 
+import tooltip from "@mapstore/components/misc/enhancers/tooltip";
+import ButtonRB from "@mapstore/components/misc/Button";
+const ButtonToolTip = tooltip(ButtonRB);
+
 const iconsByFormat = {
     "application/pdf": "1-pdf",
     "vnd.oasis.opendocument.text": "ext-txt",
@@ -27,44 +31,53 @@ const DocumentRow = (props) => {
     return (
         <tr>
             <td>
-                <Glyphicon glyph={iconsByFormat[props.contentType]} />
+                <ButtonToolTip
+                    className="docActionBtn mime-infos"
+                    tooltip={props?.contentType}
+                >
+                    <Glyphicon glyph={iconsByFormat[props.contentType]} />
+                </ButtonToolTip>
             </td>
             <td>{props.label}</td>
             <td style={{ borderLeft: "grey" }}>
-                <Button
+                <ButtonToolTip
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
+                    tooltip="Informations supplémentaires"
                     onClick={() => props.showAttributes(props.id)}
                 >
                     <Glyphicon glyph="list-alt" />
-                </Button>
+                </ButtonToolTip>
             </td>
             <td style={{ borderLeft: "grey" }}>
-                <Button
+                <ButtonToolTip
+                    tooltip="Télécharger"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
                     onClick={() => props.download(props.id)}
                 >
                     <Glyphicon glyph="download-alt" />
-                </Button>
+                </ButtonToolTip>
             </td>
             <td>
-                <Button
+                <ButtonToolTip
+                    tooltip="Afficher"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
                     onClick={() => props.show(props.id)}
                 >
                     <Glyphicon glyph="eye-open" />
-                </Button>
+                </ButtonToolTip>
             </td>
             <td>
-                <Button
+                <ButtonToolTip
+                    tooltip="Supprimer"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
                     onClick={() => props.deleteDocument(props.id)}
                 >
                     <Glyphicon glyph="trash" />
-                </Button>
+                </ButtonToolTip>
             </td>
         </tr>
     );

@@ -5,6 +5,7 @@ import "./DocumentPanel.css";
 const DocumentPanel = ({ doc = null, isVisible = false }) => {
     if (!isVisible) return null;
     return (
+        <Col xs={12}>
         <Form horizontal id="doc-attribute-panel">
             { doc?.label && 
                 (<FormGroup>
@@ -35,7 +36,8 @@ const DocumentPanel = ({ doc = null, isVisible = false }) => {
                 </Col>
                 <Col sm={9}>{doc?.dateDoc}</Col>
             </FormGroup>)}
-        </Form>
+            </Form>
+        </Col>
     );
 };
 

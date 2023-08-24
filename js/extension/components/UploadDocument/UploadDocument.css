@@ -1,16 +1,24 @@
 .docs-drop-area .alert-info {
-    padding: 30px;
-    background-color: rgb(188 188 188 / 25%);
-    color: rgb(115 115 115 / 80%);
-    border-color: rgb(188 188 188 / 30%);
-    padding: 15px;
+    padding: 30px !important;
+    background-color: rgb(188 188 188 / 25%) !important;
+    color: rgb(115 115 115 / 80%) !important;
+    border-color: rgb(188 188 188 / 30%) !important;
+    padding: 15px !important;
 }
 
 .docs-upload-form .control-label {
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 
 .docs-invalid {
-    border-color:red;
-    color: red;
+    border-color:red !important;
+    color: red !important;
+}
+
+.section {
+    color: #078aa3;
+}
+
+#docsFromGroup {
+    margin-bottom: 0px;
 }
