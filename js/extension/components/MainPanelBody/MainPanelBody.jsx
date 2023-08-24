@@ -9,14 +9,15 @@ import {
     getDocuments,
     setIdToConsult,
     setIdToDelete,
-    showDocument
+    showDocument,
 } from "@js/extension/stateManagement/actions/actions";
 import {
     getApiDocuments,
+    getEntity,
     getIdToConsult,
     getIdToDelete,
 } from "@js/extension/stateManagement/selector/selector";
-import { Col, Table } from "react-bootstrap";
+import { Col, Table, Checkbox } from "react-bootstrap";
 import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
 import DocumentRow from "../DocumentRow/DocumentRow";
 
@@ -34,6 +35,7 @@ const MainPanelBody = ({
     setIdToDelete = () => {},
     setIdToConsult = () => {},
     idToConsult,
+    entity,
 }) => {
     const toolbarButtons = [
         {
@@ -44,7 +46,7 @@ const MainPanelBody = ({
             text: "",
             bsStyle: "primary",
             tooltipId: "extension.refresh",
-            onClick: () => refresh(),
+            onClick: () => refresh({ entity: entity }),
         },
     ];
 
@@ -65,9 +67,9 @@ const MainPanelBody = ({
     if (idToConsult) {
         return (
             <DocumentPanel
-                    isVisible={idToConsult || false}
-                    doc={documents.filter((d) => d.id === idToConsult)[0]}
-                />
+                isVisible={idToConsult || false}
+                doc={documents.filter((d) => d.id === idToConsult)[0]}
+            />
         );
     }
 
@@ -83,20 +85,33 @@ const MainPanelBody = ({
             )}
             {!isEmpty(documents) && (
                 <>
-                    <Col xs={12}>
+                    <Col xs={entity ? 10 : 12}>
                         <Toolbar
                             id="docs-manager-header-toolbar"
                             buttons={toolbarButtons}
                         />
+                    </Col>
+                    <Col xs={12} className="text-right">
+                        <Checkbox
+                            id="docsEntityCheck"
+                            onChange={(x) => {
+                                refresh(
+                                    x.target.checked && entity
+                                        ? { entity: entity }
+                                        : {}
+                                );
+                            }}
+                        >
+                            Documents de l'entité
+                        </Checkbox>
                     </Col>
                     <Col xs={12} className="docs-div-table">
                         <Table responsive className="docs-table">
                             <tbody className="docs-tbody">
                                 {documents.map((document) => {
                                     let docProps = {
-                                        deleteDocument: (id) =>
-                                        {
-                                            setIdToDelete(id)
+                                        deleteDocument: (id) => {
+                                            setIdToDelete(id);
                                         },
                                         show,
                                         download,
@@ -119,6 +134,7 @@ export default connect(
         documents: getApiDocuments(state),
         idToDelete: getIdToDelete(state),
         idToConsult: getIdToConsult(state),
+        entity: getEntity(state),
     }),
     {
         refresh: getDocuments,

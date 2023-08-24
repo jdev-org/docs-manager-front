@@ -21,13 +21,19 @@ const MainPanel = ({
     idToConsult,
     controlUpload,
     uploadValidation,
-    setIdToConsult
+    setIdToConsult,
 }) => {
     if (!active) return null;
 
     return (
         <div className="static-modal">
-            <Modal className="docs-modal" show={active} onHide={onClose} bsSize="large">
+            <Modal
+                className="docs-modal"
+                show={active}
+                onHide={onClose}
+                bsSize="large"
+                aria-labelledby="contained-modal-title-lg"
+            >
                 <Modal.Header closeButton>
                     <Modal.Title>Documents</Modal.Title>
                 </Modal.Header>
@@ -48,9 +54,7 @@ const MainPanel = ({
                             />
                         )}
 
-                        {
-                            !isUpload && (<MainPanelBody />)
-                        }
+                        {!isUpload && <MainPanelBody />}
 
                         {!isUpload && !idToDelete && !idToConsult && (
                             <Col
@@ -73,17 +77,26 @@ const MainPanel = ({
 
                 <Modal.Footer>
                     {isUpload && (
-                        <Button bsStyle="primary" onClick={() => setUploadVisibility(false)}>
+                        <Button
+                            bsStyle="primary"
+                            onClick={() => setUploadVisibility(false)}
+                        >
                             Annuler
                         </Button>
                     )}
                     {idToConsult && (
-                        <Button bsStyle="warning" onClick={() => setIdToConsult(null)}>
+                        <Button
+                            bsStyle="warning"
+                            onClick={() => setIdToConsult(null)}
+                        >
                             Retour
                         </Button>
                     )}
                     {idToDelete && (
-                        <Button bsStyle="primary" onClick={() => setIdToConsult(null)}>
+                        <Button
+                            bsStyle="primary"
+                            onClick={() => setIdToConsult(null)}
+                        >
                             Annuler
                         </Button>
                     )}

@@ -35,8 +35,10 @@ const UploadDocument = ({
     const [comment, setComment] = useState("");
     const [status, setStatus] = useState("");
     const [dateDoc, setDateDoc] = useState("");
+    const [inputStart, setInputStart] = useState(false);
 
     const isValidLabel = () => {
+        if (!inputStart) return true;
         if (!label || !label.length || !uploadValidation?.label) {
             return false
         }
@@ -44,6 +46,7 @@ const UploadDocument = ({
     }
 
     const isValid = () => {
+        if (!inputStart) return true;
         const requiredMissing = [];
         required.map((f) => {
             if (f == "label" && !label) requiredMissing.push("label");
@@ -56,7 +59,7 @@ const UploadDocument = ({
     };
     return (
         <div className="docs-upload-form">
-            <Col xs={12}>
+            <Col xs={12} className="section">
                 <h4>Sélectionner un document depuis votre ordinateur :</h4>
             </Col>
             <Col xs={12} className="docs-drop-area">
@@ -86,15 +89,12 @@ const UploadDocument = ({
                 )}
             </Col>
             <div>
-                <Col xs={12}>
-                    <strong>Informations sur le document :</strong>
+                <Col xs={12} className="section">
+                    <h4>Informations sur le document :</h4>
                 </Col>
                 <Col xs={12}>
                     <form>
-                        <FormGroup
-                            controlId="formBasicText"
-                            validationState={() => {}}
-                        >
+                        <FormGroup id="docsFromGroup">
                             {fields.includes("label") && (
                                 <Col xs={6}>
                                     <ControlLabel>Titre :</ControlLabel>
@@ -108,7 +108,10 @@ const UploadDocument = ({
                                         search={(x) => {
                                             controlUpload({label: x});
                                         }}
-                                        onChange={setLabel}
+                                        onChange={(x) => {
+                                            setInputStart(true);
+                                            setLabel(x);
+                                        }}
                                     />
                                 </Col>
                             )}

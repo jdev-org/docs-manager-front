@@ -1,12 +1,12 @@
 .docs-add-btn-div{
-    margin-top: 15px;
+    margin-top: 15px !important;
 }
 
 .docs-modal-body {
-    max-height: 470px;
-    overflow: auto;
+    max-height: 470px !important;
+    overflow: auto !important;
 }
 
 .docs-modal .modal-dialog {
-    margin-top: 20px;
+    margin-top: 20px !important;
 }
