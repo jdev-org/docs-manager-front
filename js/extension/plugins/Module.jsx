@@ -38,7 +38,7 @@ const component = compose(
         }),
         {
             // actions - mapDispatchToProps
-            onClose: close,
+            onClose: toggleControl.bind(null, CONTROL_NAME, null),
             setUploadVisibility: setUploadVisibility,
             upload: uploadDocument,
             controlUpload: controlValues,
@@ -48,8 +48,7 @@ const component = compose(
     compose(
         // on setup / close
         connect(() => ({}), {
-            setup,
-            close,
+            setup
         }),
         init()
     )
@@ -70,13 +69,21 @@ export default createPlugin(name, {
             action: toggleControl.bind(null, CONTROL_NAME, null),
             priority: 1
         },
-        d2t: {
+        BurgerMenu: {
             name: "docsManager",
             position: 10,
             icon: <Glyphicon glyph="level-up"/>,
             doNotHide: true,
             action: toggleControl.bind(null, CONTROL_NAME, null),
-            priority: 1
-        }
+            priority: 3
+        },
+        // d2t: {
+        //     name: "docsManager",
+        //     position: 10,
+        //     icon: <Glyphicon glyph="level-up"/>,
+        //     doNotHide: true,
+        //     action: toggleControl.bind(null, CONTROL_NAME, null),
+        //     priority: 1
+        // }
     }
 });
