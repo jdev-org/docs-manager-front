@@ -46,7 +46,7 @@ const MainPanelBody = ({
             text: "",
             bsStyle: "primary",
             tooltipId: "extension.refresh",
-            onClick: () => refresh({ entity: entity }),
+            onClick: () => refresh(entity ? { entity: entity } : {}),
         },
     ];
 
