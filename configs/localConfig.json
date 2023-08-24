@@ -191,12 +191,6 @@
   "plugins": {
     "mobile": [
       {
-        "name": "DocsManager",
-        "cfg": {
-          "id": "CARTEAUX"
-        }
-      },
-      {
         "name": "Map",
         "cfg": {
           "layers": [
@@ -369,7 +363,7 @@
           "statusValues": {"values":["public","private"]},
           "fields": ["label", "", "comment", "status", "dateDoc"],
           "requiredFields": ["label"],
-          "entity": {"layer": "", "field": ""}
+          "entity": {"plugin": "d2t", "propCfg": "feature","attribute": "id"}
         }
       },
       {
