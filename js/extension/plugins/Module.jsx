@@ -77,13 +77,17 @@ export default createPlugin(name, {
             action: toggleControl.bind(null, CONTROL_NAME, null),
             priority: 3
         },
-        // d2t: {
-        //     name: "docsManager",
-        //     position: 10,
-        //     icon: <Glyphicon glyph="level-up"/>,
-        //     doNotHide: true,
-        //     action: toggleControl.bind(null, CONTROL_NAME, null),
-        //     priority: 1
-        // }
+        d2t: {
+            name: "docsManagerBtnToolbar",
+            position: 10,
+            doNotHide: true,
+            priority: 1,
+            target: "toolbar",
+            Component: connect(() => ({}), {
+                click: toggleControl.bind(null, CONTROL_NAME, null),
+            })((props) => {
+                return <button onClick={props?.click}><Glyphicon glyph={props?.pluginsCfg?.icon || "level-up"} /></button>;
+            })
+        }
     }
 });
