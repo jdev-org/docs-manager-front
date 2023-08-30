@@ -79,10 +79,12 @@ export default createPlugin(name, {
         },
         d2t: {
             name: "docsManagerBtnToolbar",
+            action: toggleControl.bind(null, CONTROL_NAME, null),
             position: 10,
             doNotHide: true,
             priority: 1,
             target: "toolbar",
+            icon: <Glyphicon glyph="level-up"/>,
             Component: connect(() => ({}), {
                 click: toggleControl.bind(null, CONTROL_NAME, null),
             })((props) => {
