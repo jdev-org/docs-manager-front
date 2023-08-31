@@ -356,13 +356,14 @@
       {
         "name": "DocsManager",
         "cfg": {
-          "icon": "1-line",
+          "icon": "tint",
           "id": "carteaux",
           "role": "SV_PWRS_CARTEAUX_CAR",
           "api": "http://localhost:8081/files",
           "statusValues": {"values":["public","private"]},
           "fields": ["label", "", "comment", "status", "dateDoc"],
           "requiredFields": ["label"],
+          "tooltip": "Documents",
           "entity": {"plugin": "d2t", "propCfg": "feature","attribute": "id"}
         }
       },
