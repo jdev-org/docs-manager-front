@@ -2,7 +2,7 @@
   "locale": "fr-FR",
   "messages": {
     "extension": {
-      "message": "Messaggio!",
+      "tooltip": "Documents",
       "refresh": "Actualiser la liste"
     }
   }
