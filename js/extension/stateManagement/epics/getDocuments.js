@@ -20,7 +20,12 @@ export function getDocumentsById(action$, store) {
             if (!apiUrl || !idPlugin) {
                 return observable$;
             }
-            const params = {...action?.params, entity: getEntity(store.getState())}
+            const entity = getEntity(store.getState());
+            if (entity) {
+                params = {...action?.params, entity: getEntity(store.getState())}
+            } else {
+                params = action?.params;
+            }
             if (apiUrl) {
                 observable$ = Rx.Observable.defer(() =>
                     getDocuments(apiUrl, idPlugin, params)
