@@ -22,13 +22,15 @@ export const getIdToDelete = state => state?.docsManager?.idToDelete;
 export const getIdToConsult = state => state?.docsManager?.idToConsult;
 
 export const getEntity = (state) => {
-    let cfg = state?.pluginCfg;
+    let cfg = state?.docsManager?.pluginCfg;
     if (cfg?.entity?.get) {
         return get(state, cfg.entity.get);
     }
-    if (cfg?.entity && cfg?.entity?.plugin && cfg?.entity?.plugin.propCfg) {
-        let pluginCfg = state[plugin]?.pluginCfg;
-        return pluginCfg ? pluginCfg[propCfg] : null;
+    if (cfg?.entity && cfg?.entity?.plugin && cfg?.entity?.propCfg && cfg?.entity?.attribute) {
+        const plugin = cfg?.entity?.plugin;
+        const propCfg = cfg?.entity?.propCfg;
+        let pluginCfg = state[plugin];
+        return pluginCfg ? pluginCfg[propCfg][cfg?.entity?.attribute] : null;
     }
 }
 
