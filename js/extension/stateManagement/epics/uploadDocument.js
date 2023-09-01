@@ -37,14 +37,12 @@ export function uploadEvent(action$, store) {
                             displayMsg("error", "Document", "Ce libellé est déjà utilisé !")
                         );
                     }
-                    const entityProperties = getEntity(store.getState()?.properties);
-                    const entityAttribute = getPluginCfg(store.getState())?.entity?.attribute;
-                    const entity = get(entityProperties, entityAttribute);
-                    let params = action.params;
+                    const entity = getEntity(store.getState());
                     if (entity) {
-                        params = { ...params, entity: entity };
+                        params = {...action?.params, entity: entity}
+                    } else {
+                        params = action?.params;
                     }
-                    params = {...params, entity: uniqueId()}
                     return Rx.Observable.defer(() =>
                         uploadDocument(
                             apiUrl,

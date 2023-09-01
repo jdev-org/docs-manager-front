@@ -22,7 +22,7 @@ export function getDocumentsById(action$, store) {
             }
             const entity = getEntity(store.getState());
             if (entity) {
-                params = {...action?.params, entity: getEntity(store.getState())}
+                params = {...action?.params, entity: entity}
             } else {
                 params = action?.params;
             }
