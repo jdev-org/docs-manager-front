@@ -4,7 +4,7 @@ import {
     setDocuments,
     docsLoading as loading,
 } from "../actions/actions";
-import { getPluginCfg, isActive } from "../selector/selector";
+import { getEntity, getPluginCfg, isActive } from "../selector/selector";
 import { wrapStartStop } from "@mapstore/observables/epics";
 
 import { getDocuments } from "@js/extension/requests/documentsApi";
@@ -20,9 +20,10 @@ export function getDocumentsById(action$, store) {
             if (!apiUrl || !idPlugin) {
                 return observable$;
             }
+            const params = {...action?.params, entity: getEntity(store.getState())}
             if (apiUrl) {
                 observable$ = Rx.Observable.defer(() =>
-                    getDocuments(apiUrl, idPlugin, action?.params)
+                    getDocuments(apiUrl, idPlugin, params)
                 )
                     .catch((e) => {
                         console.log("Error - Get list of documents");
