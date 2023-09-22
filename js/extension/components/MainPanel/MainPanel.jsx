@@ -8,6 +8,7 @@ import "./MainPanel.css";
 
 const MainPanel = ({
     active = false,
+    authorized = false,
     onClose = () => {},
     isUpload,
     upload,
@@ -21,7 +22,7 @@ const MainPanel = ({
     idToConsult,
     controlUpload,
     uploadValidation,
-    setIdToConsult,
+    setIdToConsult
 }) => {
     if (!active) return null;
 
@@ -56,7 +57,7 @@ const MainPanel = ({
 
                         {!isUpload && <MainPanelBody />}
 
-                        {!isUpload && !idToDelete && !idToConsult && (
+                        {(authorized && !isUpload && !idToDelete && !idToConsult) && (
                             <Col
                                 xs={12}
                                 className={"text-right docs-add-btn-div"}

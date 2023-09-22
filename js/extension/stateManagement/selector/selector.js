@@ -24,6 +24,7 @@ export const getIdToConsult = (state) => state?.docsManager?.idToConsult;
 export const getDocEntityOnly = (state) => state?.docsManager?.entityOnly;
 
 export const getEntity = (state) => {
+    //return "commune_emprise.51";
     let cfg = state?.docsManager?.pluginCfg;
     if (cfg?.entity?.get) {
         return get(state, cfg.entity.get);

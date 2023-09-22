@@ -74,7 +74,7 @@ const DocumentRow = (props) => {
                     <Glyphicon glyph="eye-open" />
                 </ButtonToolTip>
             </td>
-            <td>
+            {props.authorized && (<td>
                 <ButtonToolTip
                     tooltip="Supprimer"
                     className="docActionBtn"
@@ -83,7 +83,7 @@ const DocumentRow = (props) => {
                 >
                     <Glyphicon glyph="trash" />
                 </ButtonToolTip>
-            </td>
+            </td>)}
         </tr>
     );
 };
