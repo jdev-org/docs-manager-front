@@ -1,5 +1,10 @@
 import Rx from "rxjs";
-import { UPLOAD_DOCUMENT, displayMsg, getDocuments, setUploadVisibility } from "../actions/actions";
+import {
+    UPLOAD_DOCUMENT,
+    displayMsg,
+    getDocuments,
+    setUploadVisibility,
+} from "../actions/actions";
 import { getPluginCfg, isActive, getEntity } from "../selector/selector";
 import { uniqueId, get } from "lodash";
 
@@ -29,27 +34,23 @@ export function uploadEvent(action$, store) {
                     console.log("Error - Get list of documents");
                     console.log(e);
                     // fail message
-                    return true
+                    return true;
                 })
-                .switchMap(labelExists => {
+                .switchMap((labelExists) => {
                     if (labelExists) {
                         return Rx.Observable.of(
-                            displayMsg("error", "Document", "Ce libellé est déjà utilisé !")
+                            displayMsg(
+                                "error",
+                                "Document",
+                                "Ce libellé est déjà utilisé !"
+                            )
                         );
                     }
+                    let params = {};
                     const entity = getEntity(store.getState());
-                    if (entity) {
-                        params = {...action?.params, entity: entity}
-                    } else {
-                        params = action?.params;
-                    }
+                    params = { ...action?.params, entity: entity || "" };
                     return Rx.Observable.defer(() =>
-                        uploadDocument(
-                            apiUrl,
-                            idPlugin,
-                            action.file,
-                            params
-                        )
+                        uploadDocument(apiUrl, idPlugin, action.file, params)
                     )
                         .catch((e) => {
                             console.log("Error - Get list of documents");
@@ -60,14 +61,22 @@ export function uploadEvent(action$, store) {
                         .switchMap((data) => {
                             if (data?.status && data.status == "200") {
                                 return Rx.Observable.of(
-                                    displayMsg("success", "Document", "Sauvegarde réussie !"),
+                                    displayMsg(
+                                        "success",
+                                        "Document",
+                                        "Sauvegarde réussie !"
+                                    ),
                                     getDocuments(),
                                     setUploadVisibility(false)
                                 );
                             } else {
                                 return Rx.Observable.of(
-                                    displayMsg("error", "Document", "Echec de la sauvegarde !"),
-                                )
+                                    displayMsg(
+                                        "error",
+                                        "Document",
+                                        "Echec de la sauvegarde !"
+                                    )
+                                );
                             }
                         });
                 });

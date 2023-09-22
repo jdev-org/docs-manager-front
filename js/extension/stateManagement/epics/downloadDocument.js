@@ -59,11 +59,13 @@ export function showOnClick(action$, store) {
                     return Rx.Observable.of([]);
                 })
                 .switchMap((data) => {
-                    showDocInTab(data);
-                    return displayMsg(
-                        "success",
-                        "Téléchargement",
-                        "Document réceptionné!"
+                    return Rx.Observable.of(
+                        showDocInTab(data),
+                        displayMsg(
+                            "success",
+                            "Téléchargement",
+                            "Document réceptionné!"
+                        )
                     );
                 });
         });

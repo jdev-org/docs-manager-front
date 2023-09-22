@@ -9,6 +9,7 @@ import {
     SET_ID_TO_DELETE,
     SET_UPLOAD_VISIBILITY,
     VALID_VALUES,
+    SET_ENTITY_ONLY,
 } from "../actions/actions";
 
 const initialState = {
@@ -20,20 +21,23 @@ const initialState = {
     uploadVisibility: false,
     idToDelete: null,
     idToConsult: null,
-    uploadIsValid: false
+    uploadIsValid: false,
+    entityOnly: null,
 };
 
 export default function reducers(state = initialState, action) {
     switch (action.type) {
+        case SET_ENTITY_ONLY:
+            return set("entityOnly", action.checked, state);
         case SET_ID_TO_CONSULT:
             return compose(
                 set("idToConsult", action.id),
-                set("idToDelete", null),
+                set("idToDelete", null)
             )(state);
         case SET_ID_TO_DELETE:
             return compose(
                 set("idToConsult", null),
-                set("idToDelete", action.id),
+                set("idToDelete", action.id)
             )(state);
         case VALID_VALUES:
             return set("uploadIsValid", action.values, state);
