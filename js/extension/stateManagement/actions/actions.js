@@ -18,25 +18,26 @@ export const SET_ID_TO_DELETE = "SET_ID_TO_DELETE";
 export const SET_ID_TO_CONSULT = "SET_ID_TO_CONSULT";
 export const VALID_VALUES = "VALID_VALUES";
 export const CONTROL_VALUES = "CONTROL_VALUES";
+export const SET_ENTITY_ONLY = "SET_ENTITY_ONLY";
 
 export const controlValues = (values) => ({
     type: CONTROL_VALUES,
-    values
+    values,
 });
 
 export const validValues = (values) => ({
     type: VALID_VALUES,
-    values
+    values,
 });
 
 export const setIdToConsult = (id) => ({
     type: SET_ID_TO_CONSULT,
-    id
+    id,
 });
 
 export const setIdToDelete = (id) => ({
     type: SET_ID_TO_DELETE,
-    id
+    id,
 });
 
 export const setUploadVisibility = (visible) => ({
@@ -137,14 +138,20 @@ export const getDocument = (id, params = {}) => ({
     params,
 });
 
+export const setEntityOnly = (checked) => ({
+    type: SET_ENTITY_ONLY,
+    checked,
+});
+
 /**
  * Get list of documents
  * @param {string} id
  * @returns {{id:string}}
  */
-export const getDocuments = (params = {}) => ({
+export const getDocuments = (params = {}, entity = false) => ({
     type: GET_DOCUMENTS,
     params,
+    entity,
 });
 
 /**
