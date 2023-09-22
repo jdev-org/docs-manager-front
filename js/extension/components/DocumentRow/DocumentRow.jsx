@@ -29,7 +29,10 @@ const iconsByFormat = {
 
 const DocumentRow = (props) => {
     const maxTitleLength = 20;
-    const label = props?.label && props.label.length > maxTitleLength ? `${props.label.slice(0, maxTitleLength)}...` : props.label;
+    const label =
+        props?.label && props.label.length > maxTitleLength
+            ? `${props.label.slice(0, maxTitleLength)}...`
+            : props.label;
     return (
         <tr>
             <td>
