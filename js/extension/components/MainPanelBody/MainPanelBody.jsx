@@ -14,6 +14,7 @@ import {
 } from "@js/extension/stateManagement/actions/actions";
 import {
     getApiDocuments,
+    getAuthLevel,
     getDocEntityOnly,
     getEntity,
     getIdToConsult,
@@ -29,6 +30,7 @@ import DeleteArea from "../commons/DeleteArea";
 import DocumentPanel from "../DocumentPanel/DocumentPanel";
 
 const MainPanelBody = ({
+    authorized = false,
     documents = [],
     refresh = () => {},
     deleteDocument = () => {},
@@ -144,7 +146,7 @@ const MainPanelBody = ({
                                     showAttributes: (id) => setIdToConsult(id),
                                     ...document,
                                 };
-                                return <DocumentRow {...docProps} />;
+                                return <DocumentRow {...docProps} authorized={authorized} />;
                             })}
                         </tbody>
                     </Table>
@@ -161,6 +163,7 @@ export default connect(
         entity: getEntity(state),
         entityOnly: getDocEntityOnly(state),
         isAdmin: isAdmin(state),
+        authorized: getAuthLevel(state)
     }),
     {
         refresh: getDocuments,
