@@ -28,6 +28,8 @@ const iconsByFormat = {
 };
 
 const DocumentRow = (props) => {
+    const maxTitleLength = 20;
+    const label = props?.label && props.label.length > maxTitleLength ? `${props.label.slice(0, maxTitleLength)}...` : props.label;
     return (
         <tr>
             <td>
@@ -38,7 +40,7 @@ const DocumentRow = (props) => {
                     <Glyphicon glyph={iconsByFormat[props.contentType]} />
                 </ButtonToolTip>
             </td>
-            <td>{props.label}</td>
+            <td>{label}</td>
             <td style={{ borderLeft: "grey" }}>
                 <ButtonToolTip
                     className="docActionBtn"
