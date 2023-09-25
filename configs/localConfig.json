@@ -358,7 +358,7 @@
         "cfg": {
           "icon": "tint",
           "id": "carteaux",
-          "role": "SV_PWRS_CARTEAUX_CAR",
+          "editingAllowedRoles": ["SV_PWRS_CARTEAUX_CAR"],
           "api": "http://localhost:8081/files",
           "statusValues": {"values":["public","private"]},
           "fields": ["label", "", "comment", "status", "dateDoc"],

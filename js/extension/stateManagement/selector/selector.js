@@ -57,7 +57,7 @@ export const getUploadVisibility = (state) =>
 export const getAuthLevel = (state) => {
     const groups = userGroupSecuritySelector(state) ?? [];
     const groupNames = groups.map(({ groupName }) => groupName);
-    let allowedRoles = getPluginCfg(state)?.allowedRoles;
+    let allowedRoles = getPluginCfg(state)?.editingAllowedRoles;
     if (isEmpty(allowedRoles)) {
         allowedRoles = ["MAPSTORE_ADMIN"];
     }
