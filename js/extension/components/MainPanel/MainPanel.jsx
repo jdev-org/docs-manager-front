@@ -33,6 +33,7 @@ const MainPanel = ({
                 show={active}
                 onHide={onClose}
                 bsSize="large"
+                backdrop="static"
                 aria-labelledby="contained-modal-title-lg"
             >
                 <Modal.Header closeButton>
