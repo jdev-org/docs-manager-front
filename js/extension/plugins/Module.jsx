@@ -99,6 +99,26 @@ export default createPlugin(name, {
             action: toggleControl.bind(null, CONTROL_NAME, null),
             priority: 3,
         },
+        Avisee: {
+            name: "docsManagerAviseeBtnToolbar",
+            action: toggleControl.bind(null, CONTROL_NAME, null),
+            position: 10,
+            doNotHide: true,
+            priority: 1,
+            target: "toolbar",
+            icon: <Glyphicon glyph="level-up" />,
+            Component: connect(() => ({}), {
+                click: toggleControl.bind(null, CONTROL_NAME, null),
+            })((props) => {
+                return (
+                    <TooltipButton onClick={props?.click} tooltip={"Documents"}>
+                        <Glyphicon
+                            glyph={props?.pluginsCfg?.icon || "level-up"}
+                        />
+                    </TooltipButton>
+                );
+            }),
+        },
         d2t: {
             name: "docsManagerBtnToolbar",
             action: toggleControl.bind(null, CONTROL_NAME, null),
