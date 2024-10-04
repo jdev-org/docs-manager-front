@@ -37,7 +37,7 @@ const DocumentRow = ({
     setOpen = () => {}
 }) => {
     const maxTitleLength = 20;
-    let {label, id, contentType, open} = document;
+    let {label, id, contentType, opened} = document;
     label = label && label.length > maxTitleLength
             ? `${label.slice(0, maxTitleLength)}...`
             : label;
@@ -88,9 +88,9 @@ const DocumentRow = ({
                     tooltip="Cocher pour que ce document soit ouvert à tous"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
-                    onClick={() => setOpen(id, !open)}
+                    onClick={() => setOpen(id, !opened)}
                 >
-                    <Glyphicon glyph={open ? "eye-open" : "eye-close"} />
+                    <Glyphicon glyph={opened ? "eye-open" : "eye-close"} />
                 </ButtonToolTip>
             </td>)}
             {authorized && (<td>

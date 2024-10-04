@@ -7,6 +7,7 @@ import {
     deleteDocument,
     downloadDocument,
     getDocuments,
+    openCloseDocument,
     setEntityOnly,
     setIdToConsult,
     setIdToDelete,
@@ -44,6 +45,7 @@ const MainPanelBody = ({
     setEntityOnly = () => {},
     entityOnly,
     isAdmin,
+    setOpen = () => {} 
 }) => {
     const toolbarButtons = [
         {
@@ -143,6 +145,7 @@ const MainPanelBody = ({
                                     consult={setIdToConsult}
                                     download={download}
                                     show={show}
+                                    setOpen={setOpen}
                                     authorized={authorized} />;
                             })}
                         </tbody>
@@ -170,5 +173,6 @@ export default connect(
         setIdToDelete: setIdToDelete,
         setIdToConsult: setIdToConsult,
         setEntityOnly: setEntityOnly,
+        setOpen: openCloseDocument
     }
 )(MainPanelBody);
