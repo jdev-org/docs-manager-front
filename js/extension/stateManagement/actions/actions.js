@@ -1,24 +1,25 @@
-export const SETUP = "SETUP";
-export const CLOSE = "CLOSE";
-export const SET_CONFIG = "SET_CONFIG";
-export const DOWNLOAD_DOCUMENT = "DOWNLOAD_DOCUMENT";
-export const UPLOAD_DOCUMENT = "UPLOAD_DOCUMENT";
-export const ADD_DOCUMENT = "ADD_DOCUMENT";
-export const GET_DOCUMENT = "GET_DOCUMENT";
-export const DELETE_DOCUMENT = "DELETE_DOCUMENT";
-export const GET_DOCUMENTS = "GET_DOCUMENTS";
-export const SHOW_NOTIFICATIONS = "SHOW_NOTIFICATIONS";
-export const DISPLAY_MSG = "DISPLAY_MSG";
-export const RESET_DOCSMANAGER_STATE = "RESET_DOCSMANAGER_STATE";
-export const SHOW_DOCUMENT = "SHOW_DOCUMENT";
-export const SET_DOCUMENTS = "SET_DOCUMENTS";
-export const DOCS_LOADING = "DOCS_LOADING";
-export const SET_UPLOAD_VISIBILITY = "SET_UPLOAD_VISIBILITY";
-export const SET_ID_TO_DELETE = "SET_ID_TO_DELETE";
-export const SET_ID_TO_CONSULT = "SET_ID_TO_CONSULT";
-export const VALID_VALUES = "VALID_VALUES";
-export const CONTROL_VALUES = "CONTROL_VALUES";
-export const SET_ENTITY_ONLY = "SET_ENTITY_ONLY";
+export const SETUP = "DOCS_MANAGER:SETUP";
+export const CLOSE = "DOCS_MANAGER:CLOSE";
+export const SET_CONFIG = "DOCS_MANAGER:SET_CONFIG";
+export const DOWNLOAD_DOCUMENT = "DOCS_MANAGER:DOWNLOAD_DOCUMENT";
+export const UPLOAD_DOCUMENT = "DOCS_MANAGER:UPLOAD_DOCUMENT";
+export const ADD_DOCUMENT = "DOCS_MANAGER:ADD_DOCUMENT";
+export const GET_DOCUMENT = "DOCS_MANAGER:GET_DOCUMENT";
+export const DELETE_DOCUMENT = "DOCS_MANAGER:DELETE_DOCUMENT";
+export const GET_DOCUMENTS = "DOCS_MANAGER:GET_DOCUMENTS";
+export const SHOW_NOTIFICATIONS = "DOCS_MANAGER:SHOW_NOTIFICATIONS";
+export const DISPLAY_MSG = "DOCS_MANAGER:DISPLAY_MSG";
+export const RESET_DOCSMANAGER_STATE = "DOCS_MANAGER:RESET_DOCSMANAGER_STATE";
+export const SHOW_DOCUMENT = "DOCS_MANAGER:SHOW_DOCUMENT";
+export const SET_DOCUMENTS = "DOCS_MANAGER:SET_DOCUMENTS";
+export const DOCS_LOADING = "DOCS_MANAGER:DOCS_LOADING";
+export const SET_UPLOAD_VISIBILITY = "DOCS_MANAGER:SET_UPLOAD_VISIBILITY";
+export const SET_ID_TO_DELETE = "DOCS_MANAGER:SET_ID_TO_DELETE";
+export const SET_ID_TO_CONSULT = "DOCS_MANAGER:SET_ID_TO_CONSULT";
+export const VALID_VALUES = "DOCS_MANAGER:VALID_VALUES";
+export const CONTROL_VALUES = "DOCS_MANAGER:CONTROL_VALUES";
+export const SET_ENTITY_ONLY = "DOCS_MANAGER:SET_ENTITY_ONLY";
+export const SET_OPEN = "DOCS_MANAGER:SET_OPEN";
 
 export const controlValues = (values) => ({
     type: CONTROL_VALUES,
@@ -162,4 +163,14 @@ export const getDocuments = (params = {}, entity = false) => ({
 export const deleteDocument = (id) => ({
     type: DELETE_DOCUMENT,
     id,
+});
+
+/**
+ * Set if document is open or not
+ * @param {boolean} open
+ * @returns
+ */
+export const openCloseDocument = (open) => ({
+    type: SET_OPEN,
+    open
 });

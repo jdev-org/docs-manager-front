@@ -137,16 +137,13 @@ const MainPanelBody = ({
                     <Table responsive className="docs-table">
                         <tbody className="docs-tbody">
                             {documents.map((document) => {
-                                let docProps = {
-                                    deleteDocument: (id) => {
-                                        setIdToDelete(id);
-                                    },
-                                    show,
-                                    download,
-                                    showAttributes: (id) => setIdToConsult(id),
-                                    ...document,
-                                };
-                                return <DocumentRow {...docProps} authorized={authorized} />;
+                                return <DocumentRow 
+                                    document={document}
+                                    remove={setIdToDelete}
+                                    consult={setIdToConsult}
+                                    download={download}
+                                    show={show}
+                                    authorized={authorized} />;
                             })}
                         </tbody>
                     </Table>

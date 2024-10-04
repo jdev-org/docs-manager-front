@@ -27,20 +27,29 @@ const iconsByFormat = {
     "application/x-7z-compressed": "folder-close", //.7z
 };
 
-const DocumentRow = (props) => {
+const DocumentRow = ({
+    document,
+    show,
+    consult,
+    remove,
+    download,
+    authorized,
+    setOpen = () => {}
+}) => {
     const maxTitleLength = 20;
-    const label =
-        props?.label && props.label.length > maxTitleLength
-            ? `${props.label.slice(0, maxTitleLength)}...`
-            : props.label;
+    let {label, id, contentType, open} = document;
+    label = label && label.length > maxTitleLength
+            ? `${label.slice(0, maxTitleLength)}...`
+            : label;
+    
     return (
         <tr>
             <td>
                 <ButtonToolTip
                     className="docActionBtn mime-infos"
-                    tooltip={props?.contentType}
+                    tooltip={contentType}
                 >
-                    <Glyphicon glyph={iconsByFormat[props.contentType]} />
+                    <Glyphicon glyph={iconsByFormat[contentType]} />
                 </ButtonToolTip>
             </td>
             <td>{label}</td>
@@ -49,7 +58,7 @@ const DocumentRow = (props) => {
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
                     tooltip="Informations supplémentaires"
-                    onClick={() => props.showAttributes(props.id)}
+                    onClick={() => consult(id)}
                 >
                     <Glyphicon glyph="list-alt" />
                 </ButtonToolTip>
@@ -59,7 +68,7 @@ const DocumentRow = (props) => {
                     tooltip="Télécharger"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
-                    onClick={() => props.download(props.id)}
+                    onClick={() => download(id)}
                 >
                     <Glyphicon glyph="download-alt" />
                 </ButtonToolTip>
@@ -69,17 +78,27 @@ const DocumentRow = (props) => {
                     tooltip="Afficher"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
-                    onClick={() => props.show(props.id)}
+                    onClick={() => show(id)}
                 >
-                    <Glyphicon glyph="eye-open" />
+                    <Glyphicon glyph="search" />
                 </ButtonToolTip>
             </td>
-            {props.authorized && (<td>
+            {authorized && (<td>
+                <ButtonToolTip
+                    tooltip="Cocher pour que ce document soit ouvert à tous"
+                    className="docActionBtn"
+                    id={uniqueId("doc_show_")}
+                    onClick={() => setOpen(id, !open)}
+                >
+                    <Glyphicon glyph={open ? "eye-open" : "eye-close"} />
+                </ButtonToolTip>
+            </td>)}
+            {authorized && (<td>
                 <ButtonToolTip
                     tooltip="Supprimer"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
-                    onClick={() => props.deleteDocument(props.id)}
+                    onClick={() => remove(id)}
                 >
                     <Glyphicon glyph="trash" />
                 </ButtonToolTip>
