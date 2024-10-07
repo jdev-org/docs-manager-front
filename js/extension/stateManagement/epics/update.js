@@ -15,7 +15,7 @@ export const updateDocument = (action$, store) =>
             const apiUrl = getPluginCfg(store.getState()).api;
             const idPlugin = getPluginCfg(store.getState()).id;
             return Rx.Observable.defer(() => updateRequest(apiUrl, params?.id, idPlugin, {
-                opened: params?.opened,
+                opened: params?.opened || false,
                 comment: params?.comment,
                 entity: params?.entity,
                 id: params?.id,
