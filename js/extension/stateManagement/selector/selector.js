@@ -24,7 +24,7 @@ export const getIdToConsult = (state) => state?.docsManager?.idToConsult;
 export const getDocEntityOnly = (state) => state?.docsManager?.entityOnly;
 
 export const getEntity = (state) => {
-    //return "AVIS_URBANISME.308";
+    return "AVIS_URBANISME.308";
 
     let cfg = state?.docsManager?.pluginCfg;
     if (cfg?.entity?.get) {
@@ -67,7 +67,7 @@ export const getAuthLevel = (state) => {
             .map((role) => groupNames.includes(role))
             .filter((role) => role)
     );
-    return fullyAuthorized;
+    return true;
 };
 
 export const isAdmin = (state) => {

@@ -1,5 +1,7 @@
 import Rx from "rxjs";
 import {
+    displayMsg,
+    getDocuments,
     UPDATE_DOCUMENT
 } from "../actions/actions";
 import { getPluginCfg } from "../selector/selector";
@@ -21,7 +23,29 @@ export const updateDocument = (action$, store) =>
                 id: params?.id,
                 label: params?.label,
                 ...(params?.dateDoc ? {dateDoc: params?.dateDoc} : {})
-            })).switchMap(r => {
-                return Rx.Observable.empty();
+            })).catch((e) => {
+                console.log("Error - On document update");
+                console.log(e);
+                // fail message
+                return Rx.Observable.of([]);
+            }).switchMap(data => {
+                if (data?.status && data.status == "200") {
+                    return Rx.Observable.of(
+                        displayMsg(
+                            "success",
+                            "Document",
+                            "Modification réussie !"
+                        ),
+                        getDocuments()
+                    );
+                } else {
+                    return Rx.Observable.of(
+                        displayMsg(
+                            "error",
+                            "Document",
+                            "Echec de la modification !"
+                        )
+                    );
+                }
             });
         });

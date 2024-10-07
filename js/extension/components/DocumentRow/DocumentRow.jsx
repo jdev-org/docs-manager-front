@@ -34,7 +34,8 @@ const DocumentRow = ({
     remove,
     download,
     authorized,
-    update = () => {}
+    update = () => {},
+    fields
 }) => {
     const maxTitleLength = 20;
     let {label, id, contentType, opened} = document;
@@ -83,7 +84,7 @@ const DocumentRow = ({
                     <Glyphicon glyph="search" />
                 </ButtonToolTip>
             </td>
-            {authorized && (<td>
+            {(fields.includes("opened") && authorized) && (<td>
                 <ButtonToolTip
                     tooltip="Cocher pour que ce document soit ouvert à tous"
                     className="docActionBtn"
