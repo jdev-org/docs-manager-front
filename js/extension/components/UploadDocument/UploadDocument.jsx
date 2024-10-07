@@ -59,7 +59,7 @@ const UploadDocument = ({
         return isEmpty(requiredMissing);
     };
 
-    const displayStatus = !isEmpty(statusValues.values);
+    const displayStatus = !isEmpty(statusValues?.values);
     return (
         <div className="docs-upload-form">
             <Col xs={12} className="section">
