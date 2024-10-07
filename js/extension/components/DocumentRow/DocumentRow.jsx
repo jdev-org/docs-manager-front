@@ -34,7 +34,7 @@ const DocumentRow = ({
     remove,
     download,
     authorized,
-    setOpen = () => {}
+    update = () => {}
 }) => {
     const maxTitleLength = 20;
     let {label, id, contentType, opened} = document;
@@ -88,7 +88,7 @@ const DocumentRow = ({
                     tooltip="Cocher pour que ce document soit ouvert à tous"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
-                    onClick={() => setOpen(id, !opened)}
+                    onClick={() => update({...document, opened: !opened})}
                 >
                     <Glyphicon glyph={opened ? "eye-open" : "eye-close"} />
                 </ButtonToolTip>

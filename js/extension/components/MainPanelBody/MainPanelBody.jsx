@@ -7,11 +7,11 @@ import {
     deleteDocument,
     downloadDocument,
     getDocuments,
-    openCloseDocument,
     setEntityOnly,
     setIdToConsult,
     setIdToDelete,
     showDocument,
+    updateDocument
 } from "@js/extension/stateManagement/actions/actions";
 import {
     getApiDocuments,
@@ -45,7 +45,7 @@ const MainPanelBody = ({
     setEntityOnly = () => {},
     entityOnly,
     isAdmin,
-    setOpen = () => {} 
+    update = () => {}
 }) => {
     const toolbarButtons = [
         {
@@ -145,7 +145,7 @@ const MainPanelBody = ({
                                     consult={setIdToConsult}
                                     download={download}
                                     show={show}
-                                    setOpen={setOpen}
+                                    update={update}
                                     authorized={authorized} />;
                             })}
                         </tbody>
@@ -173,6 +173,6 @@ export default connect(
         setIdToDelete: setIdToDelete,
         setIdToConsult: setIdToConsult,
         setEntityOnly: setEntityOnly,
-        setOpen: openCloseDocument
+        update: updateDocument
     }
 )(MainPanelBody);

@@ -6,3 +6,4 @@ export * from "./getDocuments";
 export * from "./deleteDocument";
 export * from "./uploadDocument";
 export * from "./validations";
+export * from "./update";

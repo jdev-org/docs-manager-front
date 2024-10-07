@@ -3,6 +3,7 @@ export const CLOSE = "DOCS_MANAGER:CLOSE";
 export const SET_CONFIG = "DOCS_MANAGER:SET_CONFIG";
 export const DOWNLOAD_DOCUMENT = "DOCS_MANAGER:DOWNLOAD_DOCUMENT";
 export const UPLOAD_DOCUMENT = "DOCS_MANAGER:UPLOAD_DOCUMENT";
+export const UPDATE_DOCUMENT = "DOCS_MANAGER:UPDATE_DOCUMENT";
 export const ADD_DOCUMENT = "DOCS_MANAGER:ADD_DOCUMENT";
 export const GET_DOCUMENT = "DOCS_MANAGER:GET_DOCUMENT";
 export const DELETE_DOCUMENT = "DOCS_MANAGER:DELETE_DOCUMENT";
@@ -166,11 +167,11 @@ export const deleteDocument = (id) => ({
 });
 
 /**
- * Set if document is open or not
- * @param {boolean} open
- * @returns
+ * Update - document
+ * @param {any} params - body JSON object
+ * @returns 
  */
-export const openCloseDocument = (open) => ({
-    type: SET_OPEN,
-    open
-});
+export const updateDocument = (params) => ({
+    type: UPDATE_DOCUMENT,
+    params
+})

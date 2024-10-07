@@ -42,3 +42,13 @@ export function uploadDocument(api = "", plugin = "", file, params) {
             params: params
         });
 }
+
+export function updateDocument(api = "", id, plugin = "", params) {
+    return fetch(`${api}/plugin/${plugin}/${id}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params)
+    })
+}
