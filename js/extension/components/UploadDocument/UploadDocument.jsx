@@ -58,6 +58,8 @@ const UploadDocument = ({
         });
         return isEmpty(requiredMissing);
     };
+
+    const displayStatus = !isEmpty(statusValues.values);
     return (
         <div className="docs-upload-form">
             <Col xs={12} className="section">
@@ -138,7 +140,7 @@ const UploadDocument = ({
                                     />
                                 </Col>
                             )}
-                            {fields.includes("status") && (
+                            {(fields.includes("status") && displayStatus) && (
                                 <Col xs={6}>
                                     <ControlLabel>Statut :</ControlLabel>
                                     <DropdownList
