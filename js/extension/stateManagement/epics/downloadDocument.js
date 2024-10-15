@@ -59,8 +59,9 @@ export function showOnClick(action$, store) {
                     return Rx.Observable.of([]);
                 })
                 .switchMap((data) => {
+                    showDocInTab(data);
                     return Rx.Observable.of(
-                        showDocInTab(data),
+                        
                         displayMsg(
                             "success",
                             "Téléchargement",

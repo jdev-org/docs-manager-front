@@ -11,6 +11,7 @@ import {
     setIdToConsult,
     setIdToDelete,
     showDocument,
+    updateDocument
 } from "@js/extension/stateManagement/actions/actions";
 import {
     getApiDocuments,
@@ -20,6 +21,8 @@ import {
     getIdToConsult,
     getIdToDelete,
     isAdmin,
+    getFields,
+    displayAllUI
 } from "@js/extension/stateManagement/selector/selector";
 import { Col, Table, Checkbox } from "react-bootstrap";
 import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
@@ -44,6 +47,9 @@ const MainPanelBody = ({
     setEntityOnly = () => {},
     entityOnly,
     isAdmin,
+    update = () => {},
+    displayAllCheckbox = false,
+    fields
 }) => {
     const toolbarButtons = [
         {
@@ -59,7 +65,7 @@ const MainPanelBody = ({
     ];
 
     const displayCheckBox =
-        (isAdmin && entity && isEmpty(documents)) || (isAdmin && entity);
+        displayAllCheckbox && ((isAdmin && entity && isEmpty(documents)) || (isAdmin && entity));
 
     if (idToDelete) {
         return (
@@ -137,16 +143,15 @@ const MainPanelBody = ({
                     <Table responsive className="docs-table">
                         <tbody className="docs-tbody">
                             {documents.map((document) => {
-                                let docProps = {
-                                    deleteDocument: (id) => {
-                                        setIdToDelete(id);
-                                    },
-                                    show,
-                                    download,
-                                    showAttributes: (id) => setIdToConsult(id),
-                                    ...document,
-                                };
-                                return <DocumentRow {...docProps} authorized={authorized} />;
+                                return <DocumentRow 
+                                    document={document}
+                                    remove={setIdToDelete}
+                                    consult={setIdToConsult}
+                                    download={download}
+                                    show={show}
+                                    update={update}
+                                    fields={fields}
+                                    authorized={authorized} />;
                             })}
                         </tbody>
                     </Table>
@@ -163,7 +168,9 @@ export default connect(
         entity: getEntity(state),
         entityOnly: getDocEntityOnly(state),
         isAdmin: isAdmin(state),
-        authorized: getAuthLevel(state)
+        authorized: getAuthLevel(state),
+        fields: getFields(state),
+        displayAllCheckbox: displayAllUI(state)
     }),
     {
         refresh: getDocuments,
@@ -173,5 +180,6 @@ export default connect(
         setIdToDelete: setIdToDelete,
         setIdToConsult: setIdToConsult,
         setEntityOnly: setEntityOnly,
+        update: updateDocument
     }
 )(MainPanelBody);

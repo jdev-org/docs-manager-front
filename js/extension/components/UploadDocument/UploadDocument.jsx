@@ -10,7 +10,7 @@ import {
     Button,
     ControlLabel,
 } from "react-bootstrap";
-import { Glyphicon } from "react-bootstrap";
+import { Glyphicon, Checkbox } from "react-bootstrap";
 import { DropdownList } from "react-widgets";
 
 import { DateTimePicker } from "react-widgets";
@@ -27,8 +27,8 @@ const UploadDocument = ({
     statusValues,
     fields,
     required,
-    controlUpload = () => { },
-    uploadValidation
+    controlUpload = () => {},
+    uploadValidation,
 }) => {
     const [file, setFile] = useState(null);
     const [label, setLabel] = useState("");
@@ -36,14 +36,15 @@ const UploadDocument = ({
     const [status, setStatus] = useState("");
     const [dateDoc, setDateDoc] = useState("");
     const [inputStart, setInputStart] = useState(false);
+    const [opened, setOpened] = useState(false);
 
     const isValidLabel = () => {
         if (!inputStart) return true;
         if (!label || !label.length || !uploadValidation?.label) {
-            return false
+            return false;
         }
         return true;
-    }
+    };
 
     const isValid = () => {
         if (!inputStart) return true;
@@ -57,6 +58,8 @@ const UploadDocument = ({
         });
         return isEmpty(requiredMissing);
     };
+
+    const displayStatus = !isEmpty(statusValues?.values);
     return (
         <div className="docs-upload-form">
             <Col xs={12} className="section">
@@ -83,8 +86,7 @@ const UploadDocument = ({
                             style={{ marginRight: "5px" }}
                             glyph={"alert"}
                         />
-                        Le libellé doit être unique et d'au
-                        moins 3 caractères.
+                        Le libellé doit être unique et d'au moins 3 caractères.
                     </HelpBlock>
                 )}
             </Col>
@@ -95,6 +97,17 @@ const UploadDocument = ({
                 <Col xs={12}>
                     <form>
                         <FormGroup id="docsFromGroup">
+                            {fields.includes("opened") && (
+                                <Col xs={12}>
+                                    
+                                    <Checkbox 
+                                        id="openedCheckbox"
+                                        checked={opened}
+                                        onChange={() => setOpened(!opened)}
+                                        >Document ouvert à tous</Checkbox>
+                                    
+                                </Col>
+                            )}
                             {fields.includes("label") && (
                                 <Col xs={6}>
                                     <ControlLabel>Titre :</ControlLabel>
@@ -104,9 +117,8 @@ const UploadDocument = ({
                                         }
                                         value={label}
                                         placeholder="document.pdf"
-
                                         search={(x) => {
-                                            controlUpload({label: x});
+                                            controlUpload({ label: x });
                                         }}
                                         onChange={(x) => {
                                             setInputStart(true);
@@ -128,7 +140,7 @@ const UploadDocument = ({
                                     />
                                 </Col>
                             )}
-                            {fields.includes("status") && (
+                            {(fields.includes("status") && displayStatus) && (
                                 <Col xs={6}>
                                     <ControlLabel>Statut :</ControlLabel>
                                     <DropdownList
@@ -167,8 +179,10 @@ const UploadDocument = ({
                 </Col>
                 <Col xs={12}>
                     <Button
-                        className={isValid() && isValidLabel() ? "" : "disabled"}
-                        style={{marginTop: "10px"}}
+                        className={
+                            isValid() && isValidLabel() ? "" : "disabled"
+                        }
+                        style={{ marginTop: "10px" }}
                         block
                         onClick={() =>
                             isValid()
@@ -179,6 +193,7 @@ const UploadDocument = ({
                                       dateDoc: dateDoc
                                           ? moment(dateDoc).format("YYYY-MM-DD")
                                           : "",
+                                      opened: opened
                                   })
                                 : null
                         }
