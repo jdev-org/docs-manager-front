@@ -21,7 +21,8 @@ import {
     getIdToConsult,
     getIdToDelete,
     isAdmin,
-    getFields
+    getFields,
+    displayAllUI
 } from "@js/extension/stateManagement/selector/selector";
 import { Col, Table, Checkbox } from "react-bootstrap";
 import Toolbar from "@mapstore/components/misc/toolbar/Toolbar";
@@ -47,6 +48,7 @@ const MainPanelBody = ({
     entityOnly,
     isAdmin,
     update = () => {},
+    displayAllCheckbox = false,
     fields
 }) => {
     const toolbarButtons = [
@@ -63,7 +65,7 @@ const MainPanelBody = ({
     ];
 
     const displayCheckBox =
-        (isAdmin && entity && isEmpty(documents)) || (isAdmin && entity);
+        displayAllCheckbox && ((isAdmin && entity && isEmpty(documents)) || (isAdmin && entity));
 
     if (idToDelete) {
         return (
@@ -167,7 +169,8 @@ export default connect(
         entityOnly: getDocEntityOnly(state),
         isAdmin: isAdmin(state),
         authorized: getAuthLevel(state),
-        fields: getFields(state)
+        fields: getFields(state),
+        displayAllCheckbox: displayAllUI(state)
     }),
     {
         refresh: getDocuments,

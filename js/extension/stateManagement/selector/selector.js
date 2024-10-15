@@ -23,6 +23,8 @@ export const getIdToConsult = (state) => state?.docsManager?.idToConsult;
 
 export const getDocEntityOnly = (state) => state?.docsManager?.entityOnly;
 
+export const displayAllUI =  (state) => getPluginCfg(state)?.displayAllCheckbox
+
 export const getEntity = (state) => {
     let cfg = state?.docsManager?.pluginCfg;
     if (cfg?.entity?.get) {
