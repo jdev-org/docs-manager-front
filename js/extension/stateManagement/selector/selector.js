@@ -16,6 +16,9 @@ export const isActive = (state) => {
  * @param {*} state
  * @returns {object}
  */
+
+export const getPaginationInfos = (state) => ({...getPaginationCfg(state), ...state.docsManager.paginationInfos});
+export const getPaginationCfg = (state) => state?.docsManager?.pluginCfg?.pagination;
 export const getPluginCfg = (state) => state?.docsManager?.pluginCfg;
 export const getApiDocuments = (state) => state?.docsManager?.documents;
 export const getIdToDelete = (state) => state?.docsManager?.idToDelete;
@@ -23,7 +26,7 @@ export const getIdToConsult = (state) => state?.docsManager?.idToConsult;
 
 export const getDocEntityOnly = (state) => state?.docsManager?.entityOnly;
 
-export const displayAllUI =  (state) => getPluginCfg(state)?.displayAllCheckbox
+export const displayAllUI =  (state) => getPluginCfg(state)?.displayAllCheckbox;
 
 export const getEntity = (state) => {
     let cfg = state?.docsManager?.pluginCfg;

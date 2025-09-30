@@ -10,6 +10,8 @@ import {
     SET_UPLOAD_VISIBILITY,
     VALID_VALUES,
     SET_ENTITY_ONLY,
+    SET_PAGINATION_INFOS,
+    TOGGLE_DOCS_MANAGER
 } from "../actions/actions";
 
 const initialState = {
@@ -23,10 +25,15 @@ const initialState = {
     idToConsult: null,
     uploadIsValid: false,
     entityOnly: null,
+    paginationInfos: {}
 };
 
 export default function reducers(state = initialState, action) {
     switch (action.type) {
+        case TOGGLE_DOCS_MANAGER:
+            return set("entityOnly", action.byEntity)
+        case SET_PAGINATION_INFOS:
+            return set("paginationInfos", action.infos, state);
         case SET_ENTITY_ONLY:
             return set("entityOnly", action.checked, state);
         case SET_ID_TO_CONSULT:

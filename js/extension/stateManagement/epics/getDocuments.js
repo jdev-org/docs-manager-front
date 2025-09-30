@@ -9,6 +9,7 @@ import {
 import {
     getDocEntityOnly,
     getEntity,
+    getPaginationInfos,
     getPluginCfg,
     isActive,
     isAdmin,
@@ -35,7 +36,8 @@ export function getDocumentsById(action$, store) {
             const isAdminUser = isAdmin(store.getState());
             const apiUrl = getPluginCfg(store.getState()).api;
             const idPlugin = getPluginCfg(store.getState()).id;
-            let params = action?.params;
+            const paginationDefaultCfg = getPaginationInfos(store.getState());
+            let params = {...paginationDefaultCfg, ...action?.params};
             let observable$ = Rx.Observable.empty();
             if (!apiUrl || !idPlugin) {
                 return observable$;

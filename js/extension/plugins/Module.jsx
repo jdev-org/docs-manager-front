@@ -23,6 +23,7 @@ import {
     getIdToDelete,
     getUploadValidation,
     getIdToConsult,
+    getPaginationInfos,
 } from "../stateManagement/selector/selector";
 import reducers from "../stateManagement/reducers/reducers";
 import {
@@ -32,6 +33,8 @@ import {
     uploadDocument,
     controlValues,
     setIdToConsult,
+    setPaginationInfos,
+    toggleDocPlugin
 } from "../stateManagement/actions/actions";
 import * as epics from "../stateManagement/epics/epicsDistributor";
 import init from "./init";
@@ -59,6 +62,7 @@ const component = compose(
             idToDelete: getIdToDelete(state),
             idToConsult: getIdToConsult(state),
             uploadValidation: getUploadValidation(state),
+            paginationInfos: getPaginationInfos(state)
         }),
         {
             // actions - mapDispatchToProps
@@ -67,6 +71,7 @@ const component = compose(
             upload: uploadDocument,
             controlUpload: controlValues,
             setIdToConsult: setIdToConsult,
+            setPaginationInfos
         }
     ),
     compose(
@@ -88,7 +93,7 @@ export default createPlugin(name, {
             position: 10,
             icon: <Glyphicon glyph="level-up" />,
             doNotHide: true,
-            action: toggleControl.bind(null, CONTROL_NAME, null),
+            action: toggleDocPlugin.bind(null, false),
             priority: 1,
         },
         BurgerMenu: {
@@ -96,19 +101,19 @@ export default createPlugin(name, {
             position: 10,
             icon: <Glyphicon glyph="level-up" />,
             doNotHide: true,
-            action: toggleControl.bind(null, CONTROL_NAME, null),
+            action: toggleDocPlugin.bind(null, false),
             priority: 3,
         },
         Avisee: {
             name: "docsManagerAviseeBtnToolbar",
-            action: toggleControl.bind(null, CONTROL_NAME, null),
+            action: toggleDocPlugin.bind(null, true),
             position: 10,
             doNotHide: true,
             priority: 1,
             target: "toolbar",
             icon: <Glyphicon glyph="level-up" />,
             Component: connect(() => ({}), {
-                click: toggleControl.bind(null, CONTROL_NAME, null),
+                click: toggleDocPlugin.bind(null, true),
             })((props) => {
                 return (
                     <TooltipButton onClick={props?.click} tooltip={"Documents"}>
@@ -121,14 +126,14 @@ export default createPlugin(name, {
         },
         d2t: {
             name: "docsManagerBtnToolbar",
-            action: toggleControl.bind(null, CONTROL_NAME, null),
+            action: toggleDocPlugin.bind(null, true),
             position: 10,
             doNotHide: true,
             priority: 1,
             target: "toolbar",
             icon: <Glyphicon glyph="level-up" />,
             Component: connect(() => ({}), {
-                click: toggleControl.bind(null, CONTROL_NAME, null),
+                click: toggleDocPlugin.bind(null, true),
             })((props) => {
                 return (
                     <TooltipButton onClick={props?.click} tooltip={"Documents"}>

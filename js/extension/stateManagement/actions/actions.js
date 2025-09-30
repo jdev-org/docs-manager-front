@@ -21,6 +21,18 @@ export const VALID_VALUES = "DOCS_MANAGER:VALID_VALUES";
 export const CONTROL_VALUES = "DOCS_MANAGER:CONTROL_VALUES";
 export const SET_ENTITY_ONLY = "DOCS_MANAGER:SET_ENTITY_ONLY";
 export const SET_OPEN = "DOCS_MANAGER:SET_OPEN";
+export const SET_PAGINATION_INFOS = "DOCS_MANAGER:SET_PAGINATION_INFOS";
+export const TOGGLE_DOCS_MANAGER = "DOCS_MANAGER:TOGGLE";
+
+export const toggleDocPlugin = (byEntity = false) => ({
+    type: TOGGLE_DOCS_MANAGER,
+    byEntity
+})
+
+export const setPaginationInfos = (infos) => ({
+    type: SET_PAGINATION_INFOS,
+    infos
+})
 
 export const controlValues = (values) => ({
     type: CONTROL_VALUES,
