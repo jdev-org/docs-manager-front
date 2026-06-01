@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import InformationArea from "../commons/InformationArea";
+import Message from "@mapstore/components/I18N/Message";
 import {
-    deleteDocument,
-    downloadDocument,
-    getDocuments,
-    setEntityOnly,
-    setIdToConsult,
-    setIdToDelete,
-    showDocument,
-    updateDocument
+    deleteDocument as deleteDocumentAction,
+    downloadDocument as downloadDocumentAction,
+    getDocuments as getDocumentsAction,
+    setEntityOnly as setEntityOnlyAction,
+    setIdToConsult as setIdToConsultAction,
+    setIdToDelete as setIdToDeleteAction,
+    showDocument as showDocumentAction,
+    updateDocument as updateDocumentAction
 } from "@js/extension/stateManagement/actions/actions";
 import {
     getApiDocuments,
@@ -20,7 +21,7 @@ import {
     getEntity,
     getIdToConsult,
     getIdToDelete,
-    isAdmin,
+    isAdmin as isAdminSelector,
     getFields,
     displayAllUI
 } from "@js/extension/stateManagement/selector/selector";
@@ -51,6 +52,7 @@ const MainPanelBody = ({
     displayAllCheckbox = false,
     fields
 }) => {
+    const documentList = Array.isArray(documents) ? documents : [];
     const toolbarButtons = [
         {
             key: "docs-manager-refresh",
@@ -60,12 +62,12 @@ const MainPanelBody = ({
             text: "",
             bsStyle: "primary",
             tooltipId: "extension.refresh",
-            onClick: () => refresh(entity ? { entity: entity } : {}),
-        },
+            onClick: () => refresh(entity ? { entity: entity } : {})
+        }
     ];
 
     const displayCheckBox =
-        displayAllCheckbox && ((isAdmin && entity && isEmpty(documents)) || (isAdmin && entity));
+        displayAllCheckbox && ((isAdmin && entity && isEmpty(documentList)) || (isAdmin && entity));
 
     if (idToDelete) {
         return (
@@ -85,7 +87,7 @@ const MainPanelBody = ({
         return (
             <DocumentPanel
                 isVisible={idToConsult || false}
-                doc={documents.filter((d) => d.id === idToConsult)[0]}
+                doc={documentList.filter((d) => d.id === idToConsult)[0]}
             />
         );
     }
@@ -109,41 +111,41 @@ const MainPanelBody = ({
                             setEntityOnly(x.target.checked);
                         }}
                     >
-                        Voir les documents de la sélection
+                        <Message msgId="extension.entityOnlyCheckbox" />
                     </Checkbox>
                 </Col>
             )}
-            {entity && isEmpty(documents) && (
+            {entity && isEmpty(documentList) && (
                 <InformationArea
                     isVisible
-                    title="Aucun document"
-                    message="La liste des documents est vide pour cette sélection."
+                    msgTitleId="extension.noDocuments"
+                    msgId="extension.emptyListSelection"
                     glyph="eye-close"
                 />
             )}
-            {!entity && !isAdmin && isEmpty(documents) && (
+            {!entity && !isAdmin && isEmpty(documentList) && (
                 <InformationArea
                     isVisible
-                    title="Sélection vide !"
-                    message="Commencez par cliquer sur une entité pour voir ses documents"
+                    msgTitleId="extension.emptySelection"
+                    msgId="extension.selectEntity"
                     glyph="eye-close"
                 />
             )}
-            {!entity && isAdmin && isEmpty(documents) && (
+            {!entity && isAdmin && isEmpty(documentList) && (
                 <InformationArea
                     isVisible
-                    title="Aucun document !"
-                    message="Il n'y a aucun document à consulter."
+                    msgTitleId="extension.noDocuments"
+                    msgId="extension.noDocumentsConsult"
                     glyph="eye-close"
                 />
             )}
 
-            {!isEmpty(documents) && (
+            {!isEmpty(documentList) && (
                 <Col xs={12} className="docs-div-table">
                     <Table responsive className="docs-table">
                         <tbody className="docs-tbody">
-                            {documents.map((document) => {
-                                return <DocumentRow 
+                            {documentList.map((document) => (
+                                <DocumentRow
                                     document={document}
                                     remove={setIdToDelete}
                                     consult={setIdToConsult}
@@ -151,8 +153,9 @@ const MainPanelBody = ({
                                     show={show}
                                     update={update}
                                     fields={fields}
-                                    authorized={authorized} />;
-                            })}
+                                    authorized={authorized}
+                                />
+                            ))}
                         </tbody>
                     </Table>
                 </Col>
@@ -167,19 +170,19 @@ export default connect(
         idToConsult: getIdToConsult(state),
         entity: getEntity(state),
         entityOnly: getDocEntityOnly(state),
-        isAdmin: isAdmin(state),
+        isAdmin: isAdminSelector(state),
         authorized: getAuthLevel(state),
         fields: getFields(state),
         displayAllCheckbox: displayAllUI(state)
     }),
     {
-        refresh: getDocuments,
-        deleteDocument: deleteDocument,
-        show: showDocument,
-        download: downloadDocument,
-        setIdToDelete: setIdToDelete,
-        setIdToConsult: setIdToConsult,
-        setEntityOnly: setEntityOnly,
-        update: updateDocument
+        refresh: getDocumentsAction,
+        deleteDocument: deleteDocumentAction,
+        show: showDocumentAction,
+        download: downloadDocumentAction,
+        setIdToDelete: setIdToDeleteAction,
+        setIdToConsult: setIdToConsultAction,
+        setEntityOnly: setEntityOnlyAction,
+        update: updateDocumentAction
     }
 )(MainPanelBody);

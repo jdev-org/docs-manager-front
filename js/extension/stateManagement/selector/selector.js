@@ -17,13 +17,33 @@ export const isActive = (state) => {
  * @returns {object}
  */
 export const getPluginCfg = (state) => state?.docsManager?.pluginCfg;
-export const getApiDocuments = (state) => state?.docsManager?.documents;
+const normalizeDocuments = (documents) => {
+    if (Array.isArray(documents)) {
+        return documents;
+    }
+    if (Array.isArray(documents?.documents)) {
+        return documents.documents;
+    }
+    if (Array.isArray(documents?.content)) {
+        return documents.content;
+    }
+    if (Array.isArray(documents?.items)) {
+        return documents.items;
+    }
+    if (Array.isArray(documents?.results)) {
+        return documents.results;
+    }
+    return [];
+};
+
+export const getApiDocuments = (state) =>
+    normalizeDocuments(state?.docsManager?.documents);
 export const getIdToDelete = (state) => state?.docsManager?.idToDelete;
 export const getIdToConsult = (state) => state?.docsManager?.idToConsult;
 
 export const getDocEntityOnly = (state) => state?.docsManager?.entityOnly;
 
-export const displayAllUI =  (state) => getPluginCfg(state)?.displayAllCheckbox
+export const displayAllUI =  (state) => getPluginCfg(state)?.displayAllCheckbox;
 
 export const getEntity = (state) => {
     let cfg = state?.docsManager?.pluginCfg;
@@ -42,6 +62,7 @@ export const getEntity = (state) => {
         let exists = get(pluginCfg, `${propCfg}.${cfg?.entity?.attribute}`);
         return exists ? exists : null;
     }
+    return null;
 };
 
 export const getUploadValidation = (state) => state?.docsManager?.uploadIsValid;

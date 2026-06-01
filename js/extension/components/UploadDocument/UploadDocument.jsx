@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, {
+    useState,
+    useEffect,
+    useImperativeHandle,
+    forwardRef,
+} from "react";
 import DropArea from "../commons/DropArea";
 import { isEmpty } from "lodash";
 
@@ -7,7 +12,6 @@ import {
     FormGroup,
     FormControl,
     HelpBlock,
-    Button,
     ControlLabel,
 } from "react-bootstrap";
 import { Glyphicon, Checkbox } from "react-bootstrap";
@@ -17,19 +21,21 @@ import { DateTimePicker } from "react-widgets";
 
 import moment from "moment";
 import momentLocalizer from "react-widgets/lib/localizers/moment";
+import Message from "@mapstore/components/I18N/Message";
 momentLocalizer(moment);
 
 import "./UploadDocument.css";
 import SearchText from "../commons/SearchText";
 
-const UploadDocument = ({
+const UploadDocument = forwardRef(({
     upload = () => {},
     statusValues,
     fields,
     required,
     controlUpload = () => {},
     uploadValidation,
-}) => {
+    onValidityChange = () => {},
+}, ref) => {
     const [file, setFile] = useState(null);
     const [label, setLabel] = useState("");
     const [comment, setComment] = useState("");
@@ -60,10 +66,38 @@ const UploadDocument = ({
     };
 
     const displayStatus = !isEmpty(statusValues?.values);
+
+    const handleUpload = () =>
+        upload(file, {
+            label: label,
+            comment: comment,
+            status: status,
+            dateDoc: dateDoc ? moment(dateDoc).format("YYYY-MM-DD") : "",
+            opened: opened,
+        });
+
+    const canSubmit = isValid() && isValidLabel();
+
+    useEffect(() => {
+        onValidityChange(canSubmit);
+    }, [canSubmit, onValidityChange]);
+
+    useImperativeHandle(
+        ref,
+        () => ({
+            submit: () => {
+                if (canSubmit) {
+                    handleUpload();
+                }
+            },
+        }),
+        [canSubmit, handleUpload]
+    );
+
     return (
         <div className="docs-upload-form">
             <Col xs={12} className="section">
-                <h4>Sélectionner un document depuis votre ordinateur :</h4>
+                <h4><Message msgId="extension.selectDocument" /></h4>
             </Col>
             <Col xs={12} className="docs-drop-area">
                 <DropArea
@@ -78,7 +112,7 @@ const UploadDocument = ({
                         style={{ marginRight: "5px" }}
                         glyph={"info-sign"}
                     />
-                    La taille du fichier ne doit pas dépasser 50 Mo.
+                    <Message msgId="extension.fileSizeLimit" />
                 </HelpBlock>
                 {!isValidLabel() && (
                     <HelpBlock className={"docs-invalid"}>
@@ -86,13 +120,13 @@ const UploadDocument = ({
                             style={{ marginRight: "5px" }}
                             glyph={"alert"}
                         />
-                        Le libellé doit être unique et d'au moins 3 caractères.
+                        <Message msgId="extension.labelValidation" />
                     </HelpBlock>
                 )}
             </Col>
             <div>
                 <Col xs={12} className="section">
-                    <h4>Informations sur le document :</h4>
+                    <h4><Message msgId="extension.documentInfo" /></h4>
                 </Col>
                 <Col xs={12}>
                     <form>
@@ -104,13 +138,13 @@ const UploadDocument = ({
                                         id="openedCheckbox"
                                         checked={opened}
                                         onChange={() => setOpened(!opened)}
-                                        >Document ouvert à tous</Checkbox>
+                                        ><Message msgId="extension.documentOpenCheckbox" /></Checkbox>
                                     
                                 </Col>
                             )}
                             {fields.includes("label") && (
                                 <Col xs={6}>
-                                    <ControlLabel>Titre :</ControlLabel>
+                                    <ControlLabel><Message msgId="extension.title" /></ControlLabel>
                                     <SearchText
                                         className={
                                             isValidLabel() ? "" : "docs-invalid"
@@ -129,7 +163,7 @@ const UploadDocument = ({
                             )}
                             {fields.includes("comment") && (
                                 <Col xs={6}>
-                                    <ControlLabel>Commentaire:</ControlLabel>
+                                    <ControlLabel><Message msgId="extension.commentLabel" /></ControlLabel>
                                     <FormControl
                                         type="text"
                                         placeholder="Information complémentaire..."
@@ -142,7 +176,7 @@ const UploadDocument = ({
                             )}
                             {(fields.includes("status") && displayStatus) && (
                                 <Col xs={6}>
-                                    <ControlLabel>Statut :</ControlLabel>
+                                    <ControlLabel><Message msgId="extension.status" /></ControlLabel>
                                     <DropdownList
                                         data={statusValues.values}
                                         value={status}
@@ -155,7 +189,7 @@ const UploadDocument = ({
                             {fields.includes("dateDoc") && (
                                 <Col xs={6}>
                                     <ControlLabel>
-                                        Date du document:
+                                        <Message msgId="extension.dateDocLabel" />
                                     </ControlLabel>
                                     <DateTimePicker
                                         type="date"
@@ -177,33 +211,8 @@ const UploadDocument = ({
                         </FormGroup>
                     </form>
                 </Col>
-                <Col xs={12}>
-                    <Button
-                        className={
-                            isValid() && isValidLabel() ? "" : "disabled"
-                        }
-                        style={{ marginTop: "10px" }}
-                        block
-                        onClick={() =>
-                            isValid()
-                                ? upload(file, {
-                                      label: label,
-                                      comment: comment,
-                                      status: status,
-                                      dateDoc: dateDoc
-                                          ? moment(dateDoc).format("YYYY-MM-DD")
-                                          : "",
-                                      opened: opened
-                                  })
-                                : null
-                        }
-                    >
-                        <Glyphicon style={{ marginRight: "5px" }} glyph="ok" />
-                        Valider
-                    </Button>
-                </Col>
             </div>
         </div>
     );
-};
+});
 export default UploadDocument;

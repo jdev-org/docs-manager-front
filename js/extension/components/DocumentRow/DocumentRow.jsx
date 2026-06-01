@@ -8,6 +8,7 @@ import "./DocumentRow.css";
 
 import tooltip from "@mapstore/components/misc/enhancers/tooltip";
 import ButtonRB from "@mapstore/components/misc/Button";
+import Message from '@mapstore/components/I18N/Message';
 const ButtonToolTip = tooltip(ButtonRB);
 
 const iconsByFormat = {
@@ -49,6 +50,7 @@ const DocumentRow = ({
                 <ButtonToolTip
                     className="docActionBtn mime-infos"
                     tooltip={contentType}
+                    tooltipId={contentType ? "extension.contentType" : ""}
                 >
                     <Glyphicon glyph={iconsByFormat[contentType]} />
                 </ButtonToolTip>
@@ -58,7 +60,7 @@ const DocumentRow = ({
                 <ButtonToolTip
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
-                    tooltip="Informations supplémentaires"
+                    tooltipId="extension.moreInfo"
                     onClick={() => consult(id)}
                 >
                     <Glyphicon glyph="list-alt" />
@@ -66,7 +68,7 @@ const DocumentRow = ({
             </td>
             <td style={{ borderLeft: "grey" }}>
                 <ButtonToolTip
-                    tooltip="Télécharger"
+                    tooltipId="extension.download"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
                     onClick={() => download(id)}
@@ -76,7 +78,7 @@ const DocumentRow = ({
             </td>
             <td>
                 <ButtonToolTip
-                    tooltip="Afficher"
+                    tooltipId="extension.show"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
                     onClick={() => show(id)}
@@ -86,7 +88,7 @@ const DocumentRow = ({
             </td>
             {(fields.includes("opened") && authorized) && (<td>
                 <ButtonToolTip
-                    tooltip="Cocher pour que ce document soit ouvert à tous"
+                    tooltipId="extension.openForAll"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
                     onClick={() => update({...document, opened: !opened})}
@@ -96,7 +98,7 @@ const DocumentRow = ({
             </td>)}
             {authorized && (<td>
                 <ButtonToolTip
-                    tooltip="Supprimer"
+                    tooltipId="extension.delete"
                     className="docActionBtn"
                     id={uniqueId("doc_show_")}
                     onClick={() => remove(id)}
