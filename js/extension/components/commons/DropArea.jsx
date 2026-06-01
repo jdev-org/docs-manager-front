@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Dropzone from "react-dropzone";
 import { Glyphicon } from "react-bootstrap";
 import { Col } from "react-bootstrap";
+import Message from "@mapstore/components/I18N/Message";
 
 const DropArea = ({
     onDrop = () => { },
@@ -31,7 +32,7 @@ const DropArea = ({
                 <div>
                     <Glyphicon glyph="upload" style={{ paddingRight: "5px" }} />
                     <p>
-                        Cliquer ou glisser un fichier...
+                        <Message msgId="extension.dragFilesHint" />
                     </p>
                     {label &&( <p>{label}</p>)}
                 </div>

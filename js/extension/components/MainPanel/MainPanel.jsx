@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
 import { Button, Modal, Col, Row } from "react-bootstrap";
 import MainPanelBody from "../MainPanelBody/MainPanelBody";
 import { Glyphicon } from "react-bootstrap";
 import UploadDocument from "../UploadDocument/UploadDocument";
+import Message from "@mapstore/components/I18N/Message";
 import "./MainPanel.css";
 
 const MainPanel = ({
@@ -24,6 +25,9 @@ const MainPanel = ({
     uploadValidation,
     setIdToConsult
 }) => {
+    const uploadDocumentRef = useRef(null);
+    const [isUploadValid, setIsUploadValid] = useState(false);
+
     if (!active) return null;
 
     return (
@@ -37,13 +41,14 @@ const MainPanel = ({
                 aria-labelledby="contained-modal-title-lg"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Documents</Modal.Title>
+                    <Modal.Title><Message msgId="extension.documentsModal" /></Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body className="docs-modal-body">
                     <Row>
                         {isUpload && (
                             <UploadDocument
+                                ref={uploadDocumentRef}
                                 upload={upload}
                                 close={() => setUploadVisibility(false)}
                                 fields={fields}
@@ -53,6 +58,7 @@ const MainPanel = ({
                                 documents={documents}
                                 controlUpload={controlUpload}
                                 uploadValidation={uploadValidation}
+                                onValidityChange={setIsUploadValid}
                             />
                         )}
 
@@ -70,7 +76,7 @@ const MainPanel = ({
                                         setUploadVisibility(!isUpload)
                                     }
                                 >
-                                    <Glyphicon glyph="plus" /> Nouveau document
+                                    <Glyphicon glyph="plus" /> <Message msgId="extension.newDocument" />
                                 </Button>
                             </Col>
                         )}
@@ -79,19 +85,29 @@ const MainPanel = ({
 
                 <Modal.Footer>
                     {isUpload && (
-                        <Button
-                            bsStyle="primary"
-                            onClick={() => setUploadVisibility(false)}
-                        >
-                            Annuler
-                        </Button>
+                        <>
+                            <Button
+                                bsStyle={isUploadValid ? "success" : "default"}
+                                disabled={!isUploadValid}
+                                onClick={() => uploadDocumentRef.current?.submit()}
+                            >
+                                <Glyphicon style={{ marginRight: "5px" }} glyph="ok" />
+                                <Message msgId="extension.validate" />
+                            </Button>
+                            <Button
+                                bsStyle="primary"
+                                onClick={() => setUploadVisibility(false)}
+                            >
+                                <Message msgId="extension.back" />
+                            </Button>
+                        </>
                     )}
                     {idToConsult && (
                         <Button
                             bsStyle="warning"
                             onClick={() => setIdToConsult(null)}
                         >
-                            Retour
+                            <Message msgId="extension.back" />
                         </Button>
                     )}
                     {idToDelete && (
@@ -99,7 +115,7 @@ const MainPanel = ({
                             bsStyle="primary"
                             onClick={() => setIdToConsult(null)}
                         >
-                            Annuler
+                            <Message msgId="extension.cancel" />
                         </Button>
                     )}
 

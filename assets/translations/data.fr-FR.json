@@ -3,7 +3,42 @@
   "messages": {
     "extension": {
       "tooltip": "Documents",
-      "refresh": "Actualiser la liste"
+      "refresh": "Actualiser la liste",
+      "noDocuments": "Aucun document",
+      "emptyListSelection": "La liste des documents est vide pour cette sélection.",
+      "selectEntity": "Commencez par cliquer sur une entité pour voir ses documents",
+      "noDocumentsConsult": "Il n'y a aucun document à consulter.",
+      "moreInfo": "Informations supplémentaires",
+      "download": "Télécharger",
+      "show": "Afficher",
+      "openForAll": "Cocher pour que ce document soit ouvert à tous",
+      "delete": "Supprimer",
+      "confirmDelete": "Souhaitez-vous supprimer ce document ?",
+      "contentType": "Type de contenu",
+      "deleteButton": "Supprimer",
+      "entityOnlyCheckbox": "Voir les documents de la sélection",
+      "emptySelection": "Sélection vide !",
+      "title": "Titre :",
+      "comment": "Commentaire :",
+      "status": "Statut :",
+      "dateDoc": "Date de création :",
+      "selectDocument": "Sélectionner un document depuis votre ordinateur :",
+      "documentInfo": "Informations sur le document :",
+      "documentOpenCheckbox": "Document ouvert à tous",
+      "fileSizeLimit": "La taille du fichier ne doit pas dépasser 50 Mo.",
+      "labelValidation": "Le libellé doit être unique et d'au moins 3 caractères.",
+      "docPlaceholder": "document.pdf",
+      "additionalInfo": "Information complémentaire...",
+      "commentLabel": "Commentaire:",
+      "statusPlaceholder": "Statut du document...",
+      "datePlaceholder": "Date du document...",
+      "dateDocLabel": "Date du document:",
+      "documentsModal": "Documents",
+      "newDocument": "Nouveau document",
+      "validate": "Valider",
+      "back": "Retour",
+      "cancel": "Annuler",
+      "dragFilesHint": "Cliquer ou glisser un fichier..."
     }
   }
 }
